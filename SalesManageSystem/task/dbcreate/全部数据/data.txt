@@ -1,0 +1,13 @@
+INSERT INTO `commodityinfo` VALUES ('A00001', '迷你风扇', '个', '30', '日用品', '10', '2017-06-26');
+INSERT INTO `commodityinfo` VALUES ('A00002', '便携水壶', '个', '22', '日用品', '20', '2017-06-26');
+INSERT INTO `commodityinfo` VALUES ('A00003', '冰冻牛肉', '包', '35', '生鲜', '5', '2017-06-26');
+INSERT INTO `commodityinfo` VALUES ('A00004', '卷纸', '包', '12', '日用品', '10', '2017-06-26');
+INSERT INTO `depletion_list` VALUES ('A00001', '迷你风扇', '30', '1', '2017-06-26', '摔了');
+INSERT INTO `merchant` VALUES ('woerma', '沃尔玛', '123456', '11111@111.com', '8613123123131', '中山路');
+INSERT INTO `merchant` VALUES ('haoyouduo', '好又多', '654321', '22222@qq.com', '8612313123123', '莲坂国贸');
+INSERT INTO `staff` VALUES ('100001', '林良彬', 'p3wgn', '男', '1992-08-02', '软件园', '13959237924', '3502041XXXXXXXXXXX', '管理员', '叽叽歪');
+INSERT INTO `staff` VALUES ('100002', '郑佳禹', 'zxcvbn', '男', '1995-05-xx', '江头', '12315', '35XXXXXXXXXXXXXXXX', '管理员', '北京烤鸭');
+INSERT INTO `staff` VALUES ('100003', '王震', '123456', '男', '1992-08-xx', '机场', '12306', '35XXXXXXXXXXXXXXXX', '管理员', '沃尔玛');
+INSERT INTO `staff` VALUES ('100004', '黄云涛', '000000', '男', '1993-xx-xx', '洞里', '120', '35xxxxxxxxxxxxxxxx', '员工', '家乐福');
+INSERT INTO `staff` VALUES ('100005', '彭福贵', '111111', '男', '1991-xx-xx', '水上漂', '110', '35xxxxxxxxxxxxxxxx', '员工', '华为');
+INSERT INTO `staff` VALUES ('100006', '赖腾文', '654321', '男', '1994-xx-xx', '纺湖', '12580', '350xxxxxxxxxxxxxxx', '设计师', '土木建设');
