@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.dao.NovelMapper">
+	<insert id="addNovel" >
+		insert into novel(chapter,author,content,create_time,create_by) values (#{chapter},#{author},#{content},#{createTime},#{createBy})
+	</insert>
+	
+	<resultMap type="com.ssyvsse.crawl.entity.Novel" id="novelMap">
+		<id column="id" property="id"/>
+		<result column="chapter" property="chapter"/>
+		<result column="author" property="author"/>
+		<result column="content" property="content"/>
+	</resultMap>
+	
+	<select id="findAll" resultMap="novelMap">
+		select id,chapter,author,content from novel limit #{start},#{limit} 
+	</select>
+</mapper>
