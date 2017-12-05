@@ -112,7 +112,7 @@ public class CacheContainer {
      * @return   key,用户id，value-积分值         
      */
     public static Map<Integer,Integer> getUsersScore(String scoreKey){
-    	Map<Integer,Integer> map = new HashMap<>(); 
+    	Map<Integer,Integer> map = new HashMap<Integer,Integer>(); 
     	List<String> keys = getInstance().ehManager.getCache(default_strategy).getKeys();
     	for (int i = 0; i < keys.size(); i++) {
 			String object = keys.get(i);
@@ -134,7 +134,7 @@ public class CacheContainer {
      * @return   map ,key-postid,value-clickrate        
      */
     public static Map<Integer,Integer> getAllPostClickrate(String scoreKey){
-    	Map<Integer,Integer> map = new HashMap<>(); 
+    	Map<Integer,Integer> map = new HashMap<Integer,Integer>(); 
     	
     	List<String> keys = getInstance().ehManager.getCache(default_strategy).getKeys();
     	

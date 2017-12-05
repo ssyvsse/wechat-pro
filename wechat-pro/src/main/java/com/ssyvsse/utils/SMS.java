@@ -114,7 +114,7 @@ public class SMS {
 	            }else if(status.equals("-1")){
 	            	return JsonResult.failure(msg);
 	            }
-			} catch (IOException | DocumentException e) {
+			} catch (Exception  e) {
 				e.printStackTrace(System.out);
 			}
 			return JsonResult.failure(msg);
