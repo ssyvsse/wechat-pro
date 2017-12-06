@@ -14,12 +14,6 @@ import net.sf.ehcache.event.CacheManagerEventListenerFactory;
  */  
 public class PlatformCacheManagerEventListenerFactory  extends CacheManagerEventListenerFactory{  
 	
-   /* @Override  
-    public CacheManagerEventListener createCacheManagerEventListener(  
-            CacheManager cacheManager, Properties properties) {  
-        return new MyCacheManagerEventListener(cacheManager);  
-    }*/
-
 	@Override
 	public CacheManagerEventListener createCacheManagerEventListener(
 			Properties properties) {

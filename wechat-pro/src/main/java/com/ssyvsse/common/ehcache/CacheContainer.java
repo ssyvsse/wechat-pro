@@ -80,17 +80,6 @@ public class CacheContainer {
   
       
     public static Object getCacheObject(String cacheName,String key){
-    	/*System.out.println("name="+getInstance().ehManager.getName());
-    	String[] cacheNames = getInstance().ehManager.getCacheNames();
-    	for (int i = 0; i < cacheNames.length; i++) {
-			String string = cacheNames[i];
-			System.out.println("string="+string);
-		}
-    	List list = getInstance().ehManager.getCache(default_strategy).getKeys();
-    	for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			String object = (String) iterator.next();
-			System.out.println("key="+object);
-		}*/
         Element element=getInstance().ehManager.getCache(cacheName).get(key);  
         if(element==null){  
             return null;  
@@ -106,52 +95,7 @@ public class CacheContainer {
         return element.getObjectValue();  
     }  
     
-    /**
-     * @Description: 获取用户id和积分值
-     * @param scoreKey 通配符，比如获取积分，则使用score
-     * @return   key,用户id，value-积分值         
-     */
-    public static Map<Integer,Integer> getUsersScore(String scoreKey){
-    	Map<Integer,Integer> map = new HashMap<Integer,Integer>(); 
-    	List<String> keys = getInstance().ehManager.getCache(default_strategy).getKeys();
-    	for (int i = 0; i < keys.size(); i++) {
-			String object = keys.get(i);
-			System.out.println("keys="+object);
-			try {
-				if(object.contains(scoreKey)){
-					map.put(Integer.parseInt(object.substring(scoreKey.length(), object.length())), (Integer) getCacheObject(object));
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-        return map;
-    }
     
-    /**
-     * @Description: 获取所有的帖子的点击率值
-     * @param scoreKey 通配符，比如获取积分，则使用score
-     * @return   map ,key-postid,value-clickrate        
-     */
-    public static Map<Integer,Integer> getAllPostClickrate(String scoreKey){
-    	Map<Integer,Integer> map = new HashMap<Integer,Integer>(); 
-    	
-    	List<String> keys = getInstance().ehManager.getCache(default_strategy).getKeys();
-    	
-    	for (int i = 0; i < keys.size(); i++) {
-			String object = keys.get(i);
-			System.out.println("keys="+object);
-			try{
-				if(object.contains(scoreKey)){
-					Set<String> set = (Set<String>) getCacheObject(object);
-					map.put(Integer.parseInt(object.substring(scoreKey.length(), object.length())), set.size());
-				}
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-        return map;
-    }
     
     
     public static void clear(String cacheName){

@@ -40,7 +40,7 @@ public class CrawlCPJob {
 	private CplatestMapper cplatestMapper;
 	
 	/**
-	 * 每5s执行一次 重庆时时彩
+	 * 每5s执行一次 重庆时时彩 幸运农场
 	 */
 	@Scheduled(fixedRate = 1000 * 3)
 	public void crawTCData() {

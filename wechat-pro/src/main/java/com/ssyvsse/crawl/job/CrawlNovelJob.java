@@ -29,9 +29,9 @@ import net.sf.json.JSONObject;
  */
 //@EnableScheduling
 //@Component("crawlJob")
-public class CrawlJob {
+public class CrawlNovelJob {
 
-	private Logger log = Logger.getLogger(CrawlJob.class);
+	private Logger log = Logger.getLogger(CrawlNovelJob.class);
 
 	@Value("${novel.crawl.url}")
 	private String url;
