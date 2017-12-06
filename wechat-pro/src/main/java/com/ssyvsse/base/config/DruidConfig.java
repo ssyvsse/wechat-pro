@@ -118,6 +118,7 @@ public class DruidConfig {
 		datasource.setPoolPreparedStatements(poolPreparedStatements);
 		try {
 			datasource.setFilters(filters);
+			logger.info("initialization filter success!");
 		} catch (SQLException e) {
 			logger.error("druid configuration initialization filter", e);
 		}

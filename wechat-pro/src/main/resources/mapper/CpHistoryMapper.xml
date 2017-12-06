@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.dao.CpHistoryMapper" >
+	
+  
+  
+	
+  <resultMap id="BaseResultMap" type="com.ssyvsse.pojo.CpHistory" >
+    <id column="id" property="id"/>
+    <result column="no" property="no" />
+    <result column="before_nums" property="before_nums" />
+    <result column="before_specialnums" property="before_specialnums" />
+    <result column="after_nums" property="after_nums"  />
+    <result column="after_specialnums" property="after_specialnums"  />
+    <result column="typeid" property="typeid"/>
+    <result column="money" property="money" />
+    <result column="createtime" property="createtime"  />
+    <result column="opendate" property="opendate"  />
+    <result column="status" property="status"/>
+    <result column="img" property="img"  />
+    <result column="userid" property="userid"  />
+    <result column="audit_userid" property="auditUserid"  />
+    <result column="comment" property="comment"  />
+    <result column="platform" property="platform"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} ${criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} ${criterion.value} and ${criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    ${listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} ${criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} ${criterion.value} and ${criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    ${listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, no, before_nums, before_specialnums, after_nums, after_specialnums, money, createtime, 
+    opendate, status, img, userid, audit_userid, comment
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ${shortpy}
+    where id = ${id }
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ${shortpy}
+    where id = ${id }
+  </delete>
+  
+  <insert id="insert" parameterType="com.ssyvsse.pojo.CpHistory" >
+    insert into ${shortpy} ( no, before_nums, 
+      before_specialnums, after_nums, after_specialnums, 
+      money,  opendate, 
+       img, userid, audit_userid, 
+      comment)
+    values ( ${no }, ${before_nums }, 
+      ${before_specialnums }, ${after_nums }, ${after_specialnums }, 
+      ${money },  ${opendate }, 
+      ${img }, ${userid }, ${auditUserid }, 
+      ${comment })
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssyvsse.pojo.CpHistory" >
+    insert into ${shortpy}
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <!-- <if test="id != null and id>0" >
+        id,
+      </if> -->
+      <if test="no != null and no!=''" >
+        no,
+      </if>
+       <if test="typeid != null and typeid!=''" >
+        typeid,
+      </if>
+      <if test="before_nums != null and before_nums!=''" >
+        before_nums,
+      </if>
+      <if test="before_specialnums != null and before_specialnums!='' " >
+        before_specialnums,
+      </if>
+      <if test="after_nums != null and after_nums !='' " >
+        after_nums,
+      </if>
+      <if test="after_specialnums != null and after_specialnums!=''" >
+        after_specialnums,
+      </if>
+      <if test="money != null and money!='' " >
+        money,
+      </if>
+      <if test="createtime != null and createtime!='' " >
+        createtime,
+      </if>
+      <if test="opendate != null and opendate!='' " >
+        opendate,
+      </if>
+      <if test="status != null and status!=''" >
+        status,
+      </if>
+      <if test="img != null and img!=''" >
+        img,
+      </if>
+      <if test="userid != null and userid>0" >
+        userid,
+      </if>
+      <if test="auditUserid != null and auditUserid>0" >
+        audit_userid,
+      </if>
+      <if test="comment != null and comment!='' " >
+        comment,
+      </if>
+      <if test="platform != null and platform!='' " >
+        platform,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <!-- <if test="id != null" >
+        ${id },
+      </if> -->
+      <if test="no != null and no!='' " >
+        "${no }",
+      </if>
+      <if test="typeid != null and typeid!=''" >
+        ${typeid},
+      </if>
+      <if test="before_nums != null and before_nums!='' " >
+        "${before_nums }",
+      </if>
+      <if test="before_specialnums != null and before_specialnums!='' " >
+        "${before_specialnums }",
+      </if>
+      <if test="after_nums != null and after_nums!=''" >
+        "${after_nums }",
+      </if>
+      <if test="after_specialnums != null and after_specialnums!='' " >
+        "${after_specialnums }",
+      </if>
+      <if test="money != null and money!='' " >
+        ${money },
+      </if>
+      <if test="createtime != null and createtime!='' " >
+        "${createtime }",
+      </if>
+      <if test="opendate != null and opendate!='' " >
+        "${opendate }",
+      </if>
+      <if test="status != null and status !='' " >
+        ${status },
+      </if>
+      <if test="img != null and img !='' " >
+        "${img }",
+      </if>
+      <if test="userid != null and userid>0 " >
+        ${userid },
+      </if>
+      <if test="auditUserid != null and auditUserid>0 " >
+        ${auditUserid },
+      </if>
+      <if test="comment != null and comment>0 " >
+        "${comment }",
+      </if>
+      <if test="platform != null and platform!='' " >
+        "${platform }",
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ${shortpy}
+    <set >
+      <if test="record.id != null" >
+        id = ${record.id },
+      </if>
+      <if test="record.no != null" >
+        no = ${record.no },
+      </if>
+      <if test="record.before_nums != null" >
+        before_nums = ${record.before_nums },
+      </if>
+      <if test="record.before_specialnums != null" >
+        before_specialnums = ${record.before_specialnums },
+      </if>
+      <if test="record.after_nums != null" >
+        after_nums = ${record.after_nums },
+      </if>
+      <if test="record.after_specialnums != null" >
+        after_specialnums = ${record.after_specialnums },
+      </if>
+      <if test="record.money != null" >
+        money = ${record.money },
+      </if>
+      <if test="record.createtime != null" >
+        createtime = ${record.createtime },
+      </if>
+      <if test="record.opendate != null" >
+        opendate = ${record.opendate },
+      </if>
+      <if test="record.status != null" >
+        status = ${record.status },
+      </if>
+      <if test="record.img != null" >
+        img = ${record.img },
+      </if>
+      <if test="record.userid != null" >
+        userid = ${record.userid },
+      </if>
+      <if test="record.auditUserid != null" >
+        audit_userid = ${record.auditUserid },
+      </if>
+      <if test="record.comment != null" >
+        comment = ${record.comment },
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ${shortpy}
+    set id = ${record.id },
+      no = ${record.no },
+      before_nums = ${record.before_nums },
+      before_specialnums = ${record.before_specialnums },
+      after_nums = ${record.after_nums },
+      after_specialnums = ${record.after_specialnums },
+      money = ${record.money },
+      createtime = ${record.createtime },
+      opendate = ${record.opendate },
+      status = ${record.status },
+      img = ${record.img },
+      userid = ${record.userid },
+      audit_userid = ${record.auditUserid },
+      comment = ${record.comment }
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssyvsse.pojo.CpHistory" >
+    update ${shortpy}
+    <set >
+      <if test="no != null" >
+        no = '${no }',
+      </if>
+      <if test="before_nums != null" >
+        before_nums = '${before_nums }',
+      </if>
+      <if test="before_specialnums != null" >
+        before_specialnums = '${before_specialnums }',
+      </if>
+      <if test="after_nums != null" >
+        after_nums = '${after_nums }',
+      </if>
+      <if test="after_specialnums != null" >
+        after_specialnums = '${after_specialnums }',
+      </if>
+      <if test="money != null" >
+        money = ${money },
+      </if>
+      <if test="createtime != null" >
+        createtime = ${createtime },
+      </if>
+      <if test="opendate != null" >
+        opendate = ${opendate },
+      </if>
+      <if test="status != null" >
+        status = ${status },
+      </if>
+      <if test="img != null" >
+        img = ${img },
+      </if>
+      <if test="userid != null" >
+        userid = ${userid },
+      </if>
+      <if test="auditUserid != null" >
+        audit_userid = ${auditUserid },
+      </if>
+      <if test="comment != null" >
+        comment = ${comment },
+      </if>
+    </set>
+    ,audittime = now()
+    where id = ${id }
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ssyvsse.pojo.CpHistory" >
+    update ${shortpy}
+    set no = ${no },
+      before_nums = ${before_nums },
+      before_specialnums = ${before_specialnums },
+      after_nums = ${after_nums },
+      after_specialnums = ${after_specialnums },
+      money = ${money },
+      createtime = ${createtime },
+      opendate = ${opendate },
+      status = ${status },
+      img = ${img },
+      userid = ${userid },
+      audit_userid = ${auditUserid },
+      comment = ${comment }
+    where id = ${id }
+  </update>
+  
+  
+  <select id="getCalHistory" resultMap="BaseResultMap">
+  	 SELECT * FROM ${table} WHERE typeid = ${latest.typeid}
+  	 	AND `id` &lt; ${latest.id} ORDER BY `id` DESC LIMIT 0,${limit}
+  </select>
+  
+  <select id="getCalHistoryByPlatform" resultMap="BaseResultMap">
+  	 SELECT * FROM ${table} WHERE typeid = ${latest.typeid} and platform=#{platform}
+  	 	AND `id` &lt; ${latest.id} ORDER BY `id` DESC LIMIT 0,${limit}
+  </select>
+  
+  <select id="selectAllCpHistory" resultType="com.ssyvsse.pojo.CpHistory">
+  	select * from cp_history INNER JOIN cptype WHERE cp_history.typeid=cptype.id ORDER BY createtime DESC
+  </select>
+  
+  <select id="find" resultType="com.ssyvsse.pojo.CpHistory" parameterType="int">
+  select * from cp_history where id=#{id,jdbcType=INTEGER}
+  </select>
+  <select id="getCpNumsByTypeidAndNo" resultType="com.ssyvsse.pojo.CpHistory" >
+  SELECT * FROM cp_history WHERE typeid=#{typeid} AND no=#{no}
+  </select>
+  <insert id="addCpHistory" parameterType="com.ssyvsse.pojo.CpHistory">
+  insert into cp_history (id,
+		no, before_nums,
+		before_specialnums,after_nums,
+		after_specialnums,createtime,
+		opendate,status,img,userid,audit_userid,comment,audittime,typeid,platform)
+		values (#{id,jdbcType=INTEGER},
+		#{no,jdbcType=VARCHAR},
+		#{before_nums,jdbcType=VARCHAR},
+		#{before_specialnums,jdbcType=VARCHAR},
+		#{after_nums,jdbcType=INTEGER}, 
+		#{after_specialnums,jdbcType=INTEGER}, 
+		
+		#{createtime}, 
+		#{opendate}, 
+		#{status},
+		#{img,jdbcType=VARCHAR},
+		#{userid,jdbcType=INTEGER},
+		#{auditUserid,jdbcType=INTEGER},
+		#{comment,jdbcType=VARCHAR},
+		#{audittime},
+		#{typeid,jdbcType=INTEGER},
+		#{platform,jdbcType=VARCHAR}
+		)
+  </insert>
+  
+  <delete id="deleteCpHistory" parameterType="int">
+   delete from cp_history
+	where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="editCpHistory" parameterType="com.ssyvsse.pojo.CpHistory">
+  UPDATE cp_history SET
+	
+		no=#{no,jdbcType=VARCHAR},
+		before_nums=#{before_nums,jdbcType=VARCHAR},
+		before_specialnums=#{before_specialnums,jdbcType=VARCHAR},
+		after_nums=#{after_nums,jdbcType=INTEGER}, 
+		after_specialnums=#{after_specialnums,jdbcType=INTEGER}, 
+		money=#{money}, 
+		createtime=#{createtime}, 
+		opendate=#{opendate}, 
+		status=#{status},
+		img=#{img,jdbcType=VARCHAR},
+		userid=#{userid,jdbcType=INTEGER},
+		audit_userid=#{audit_userid,jdbcType=INTEGER},
+		comment=#{comment,jdbcType=VARCHAR},
+		audittime=#{audittime},
+		typeid=#{typeid,jdbcType=INTEGER},
+		platform=#{platform,jdbcType=VARCHAR}
+		WHERE id=#{id}
+  </update>
+</mapper>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.dao.CplatestMapper" >
+  <resultMap id="BaseResultMap" type="com.ssyvsse.pojo.Cplatest" >
+    <result column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="VARCHAR" />
+    <result column="nums" property="nums" jdbcType="VARCHAR" />
+    <result column="specialnums" property="specialnums" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+    <result column="opendate" property="opendate" jdbcType="DATE" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    typeid, no, nums, specialnums, createtime, opendate, img, status, money, comment
+  </sql>
+  
+  <insert id="insert" parameterType="com.ssyvsse.pojo.Cplatest" >
+    insert into cplatest (typeid, no, nums, 
+      specialnums, createtime, opendate, 
+      img, status, money, comment
+      )
+    values (#{typeid,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR}, #{nums,jdbcType=VARCHAR}, 
+      #{specialnums,jdbcType=VARCHAR}, #{createtime,jdbcType=DATE}, #{opendate,jdbcType=DATE}, 
+      #{img,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{money,jdbcType=DECIMAL}, #{comment,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssyvsse.pojo.Cplatest" >
+    insert into cplatest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="no != null" >
+        no,
+      </if>
+      <if test="nums != null" >
+        nums,
+      </if>
+      <if test="specialnums != null" >
+        specialnums,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="opendate != null" >
+        opendate,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="nums != null" >
+        #{nums,jdbcType=VARCHAR},
+      </if>
+      <if test="specialnums != null" >
+        #{specialnums,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="opendate != null" >
+        #{opendate,jdbcType=DATE},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cplatest
+    <set >
+      <if test="record.typeid != null" >
+        typeid = #{record.typeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.no != null" >
+        no = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nums != null" >
+        nums = #{record.nums,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialnums != null" >
+        specialnums = #{record.specialnums,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.opendate != null" >
+        opendate = #{record.opendate,jdbcType=DATE},
+      </if>
+      <if test="record.img != null" >
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cplatest
+    set typeid = #{record.typeid,jdbcType=INTEGER},
+      no = #{record.no,jdbcType=VARCHAR},
+      nums = #{record.nums,jdbcType=VARCHAR},
+      specialnums = #{record.specialnums,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=DATE},
+      opendate = #{record.opendate,jdbcType=DATE},
+      img = #{record.img,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      money = #{record.money,jdbcType=DECIMAL},
+      comment = #{record.comment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByExampleAndTypeid" parameterType="map" >
+    update cplatest
+    <set >
+      <if test="record.no != null" >
+        no = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nums != null" >
+        nums = #{record.nums,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialnums != null" >
+        specialnums = #{record.specialnums,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.opendate != null" >
+        opendate = #{record.opendate,jdbcType=DATE},
+      </if>
+     
+        img = #{record.img,jdbcType=VARCHAR},
+      
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    	where typeid=#{record.typeid} and no &lt;= #{record.no,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateCplatest">
+  	 UPDATE cplatest SET 
+  	 <if test="specialnums != null">
+  	 	specialnums = #{specialnums},
+  	 </if>
+  	  no=#{no},nums=#{nums},
+  	  createtime = #{createtime},
+  	  opendate = #{opendate},
+  	  newno = #{newno}
+  	  <if test="nextno != null">
+  	  	,nextno = #{nextno}
+  	  </if>
+  	  where typeid = #{typeid}
+  </update>
+  
+  <select id="selectByTypeid" resultType="com.ssyvsse.pojo.Cplatest">
+  	SELECT * FROM cplatest WHERE typeid = #{typeid}
+  </select>
+</mapper>

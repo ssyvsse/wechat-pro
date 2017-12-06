@@ -1,4 +1,4 @@
-package com.ssyvsse.crawl;
+package com.ssyvsse.crawl.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

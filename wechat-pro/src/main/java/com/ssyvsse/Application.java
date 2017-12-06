@@ -21,7 +21,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  */
 @SpringBootApplication
 @ServletComponentScan
-@MapperScan({ "com.ssyvsse.dao", "com.ssyvsse.base.dao","com.ssyvsse.wechat.dao" })
+@MapperScan({ "com.ssyvsse.dao", "com.ssyvsse.base.dao", "com.ssyvsse.wechat.dao" })
 @PropertySource("classpath:mybatis_test.properties")
 @Configuration
 public class Application {
@@ -36,9 +36,9 @@ public class Application {
 	@Bean(name = "sqlSessionFactory")
 	public SqlSessionFactory createSqlSessionFactoryBean() throws Exception {
 		SqlSessionFactoryBean fb = new SqlSessionFactoryBean();
-		/** 设置datasource */
+		// 设置datasource
 		fb.setDataSource(dataSource);
-		/** 设置typeAlias 包扫描路径 */
+		// 设置typeAlias 包扫描路径
 		fb.setTypeAliasesPackage("com.ssyvsse.pojo");
 
 		// 配置mapper xml文件
