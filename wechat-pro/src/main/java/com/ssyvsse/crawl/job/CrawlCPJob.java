@@ -26,8 +26,8 @@ import com.ssyvsse.pojo.CpHistory;
  *
  * @Date 2017年12月6日 下午7:56:29
  */
-@EnableScheduling
-@Component("crawlCPJob")
+//@EnableScheduling
+//@Component("crawlCPJob")
 public class CrawlCPJob {
 	private Logger log = Logger.getLogger(CrawlCPJob.class);
 	@Value("http://www.cqcp.net/")
@@ -40,9 +40,9 @@ public class CrawlCPJob {
 	private CplatestMapper cplatestMapper;
 	
 	/**
-	 * 每5s执行一次 重庆时时彩 幸运农场
+	 * 每2s执行一次 重庆时时彩 幸运农场
 	 */
-	@Scheduled(fixedRate = 1000 * 3)
+	@Scheduled(fixedRate = 1000 * 2)
 	public void crawTCData() {
 		log.info("crawl cp ... start");
 		start();

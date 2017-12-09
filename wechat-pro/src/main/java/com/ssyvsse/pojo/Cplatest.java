@@ -3,6 +3,11 @@ package com.ssyvsse.pojo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * @author llb
+ *
+ * @Date 2017年12月8日
+ */
 public class Cplatest implements Serializable {
 
 	private static final long serialVersionUID = -8634459362746715180L;

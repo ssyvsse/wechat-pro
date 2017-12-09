@@ -54,12 +54,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements I
 			return JsonResult.failure("该手机号码已注册。");
 		}
 		if (codeService.checkCode(imgcode, session)) {
-			if (!phoneFilter.equals("170") && !phoneFilter.equals("171")) {
+			if (!"170".equals(phoneFilter) && !"171".equals(phoneFilter)) {
 				JsonResult result = CPSMS.sendRegister(request, phone);
 				if (result.getCode() == 0) {
 					request.getSession().setAttribute("RegisterPhone", phone);
 					request.getSession().setAttribute("RegisterCode", request.getSession().getAttribute("LoginCode"));
-					request.getSession().setAttribute("RegisterCodeTime", new Date().getTime());
+					request.getSession().setAttribute("RegisterCodeTime", System.currentTimeMillis());
 					return JsonResult.success(result.getMessage(), result.getData());
 				} else {
 					return JsonResult.failure(result.getMessage());

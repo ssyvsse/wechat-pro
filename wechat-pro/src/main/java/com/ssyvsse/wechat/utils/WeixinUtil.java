@@ -63,8 +63,9 @@ public class WeixinUtil {
 			// 设置请求方式（GET/POST）
 			httpUrlConn.setRequestMethod(requestMethod);
 
-			if ("GET".equalsIgnoreCase(requestMethod))
+			if ("GET".equalsIgnoreCase(requestMethod)) {
 				httpUrlConn.connect();
+			}
 
 			// 当有数据需要提交时
 			if (null != outputStr) {
@@ -100,7 +101,7 @@ public class WeixinUtil {
 	}
 
 	// 获取access_token的接口地址（GET） 限200（次/天）
-	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+	public final static String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 
 	/**
 	 * 获取access_token
@@ -115,7 +116,7 @@ public class WeixinUtil {
 		AccessToken accessToken = null;
 
 		if (accessToken == null) {
-			String requestUrl = access_token_url.replace("APPID", appid).replace("APPSECRET", appsecret);
+			String requestUrl = ACCESS_TOKEN_URL.replace("APPID", appid).replace("APPSECRET", appsecret);
 			JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 			// 如果请求成功
 			if (null != jsonObject) {

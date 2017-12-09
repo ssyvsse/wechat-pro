@@ -35,7 +35,7 @@ public class DateUtils {
 	 * @param fixedTime
 	 * @return
 	 */
-	public static Long TimingTime(String fixedTime) {
+	public static Long timingTime(String fixedTime) {
 		// 获取当前时间，将其转化成long格式的数字
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

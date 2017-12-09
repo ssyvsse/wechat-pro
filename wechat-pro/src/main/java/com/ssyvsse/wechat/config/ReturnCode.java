@@ -9,7 +9,7 @@ import java.util.Map;
 public class ReturnCode {
 
     @SuppressWarnings("serial")
-    private static final Map<Integer, String> errCodeToErrMsg = new HashMap<Integer, String>(){{
+    private static final Map<Integer, String> ERRCODETOERRMSG = new HashMap<Integer, String>(){{
         put(-1, "系统繁忙");
         put(0, "请求成功");
         put(40001, "获取access_token时AppSecret错误，或者access_token无效");
@@ -161,7 +161,7 @@ public class ReturnCode {
      * @return {String}
      */
     public static String get(int errCode){
-        String result = errCodeToErrMsg.get(errCode);
+        String result = ERRCODETOERRMSG.get(errCode);
         return result != null ? result : "未知返回码：" + errCode;
     }
 }

@@ -14,7 +14,7 @@ public class MD5 {
 	  * @param input
 	  * @return
 	  */
-	 public static String stringMD5(String pw) {
+	 public static String stringMd5(String pw) {
 	  try { 
 	        // 拿到一个MD5转换器（如果想要SHA1参数换成”SHA1”） 
 	        MessageDigest messageDigest =MessageDigest.getInstance("MD5"); 
@@ -33,9 +33,9 @@ public class MD5 {
 	 
 	 
 	 public static String md5ToLowercase(String pwd,String salt){
-			String string = stringMD5(pwd);
+			String string = stringMd5(pwd);
 			
-			String string2 = stringMD5(string.toLowerCase()+salt);
+			String string2 = stringMd5(string.toLowerCase()+salt);
 			return string2.toLowerCase();
 		}
 	 

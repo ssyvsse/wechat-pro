@@ -8,7 +8,7 @@ package com.ssyvsse.wechat.config;
  */
 public class ApiConfigKit {
 	
-	private static final ThreadLocal<ApiConfig> tl = new ThreadLocal<ApiConfig>();
+	private static final ThreadLocal<ApiConfig> TL = new ThreadLocal<ApiConfig>();
 	
 	// 开发模式将输出消息交互 xml 到控制台
 	private static boolean devMode = true;
@@ -22,17 +22,18 @@ public class ApiConfigKit {
 	}
 	
 	public static void setThreadLocalApiConfig(ApiConfig apiConfig) {
-		tl.set(apiConfig);
+		TL.set(apiConfig);
 	}
 	
 	public static void removeThreadLocalApiConfig() {
-		tl.remove();
+		TL.remove();
 	}
 	
 	public static ApiConfig getApiConfig() {
-		ApiConfig result = tl.get();
-		if (result == null)
+		ApiConfig result = TL.get();
+		if (result == null) {
 			throw new IllegalStateException("需要事先使用 ApiConfigKit.setThreadLocalApiConfig(apiConfig) 将 ApiConfig对象存入，才可以调用 ApiConfigKit.getApiConfig() 方法");
+		}
 		return result;
 	}
 	

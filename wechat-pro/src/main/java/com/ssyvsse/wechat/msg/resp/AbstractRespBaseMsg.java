@@ -6,7 +6,7 @@ import com.ssyvsse.wechat.msg.req.ReqBaseMsg;
  * 消息基类（公众帐号 -> 普通用户）
  *
  */
-public abstract class RespBaseMsg {
+public abstract class AbstractRespBaseMsg {
 	// 接收方帐号（收到的OpenID）
 		protected String toUserName;
 		
@@ -31,13 +31,13 @@ public abstract class RespBaseMsg {
 		 * 用接收到的消息初始化要发出去的消息，关键在于两者 toUserName 与 fromUserName 相反
 		 * @param inMsg inMsg
 		 */
-		public RespBaseMsg(ReqBaseMsg reqBaseMsg) {
+		public AbstractRespBaseMsg(ReqBaseMsg reqBaseMsg) {
 			this.toUserName = reqBaseMsg.getFromUserName();
 			this.fromUserName = reqBaseMsg.getToUserName();
 			this.createTime = now();
 		}
 		
-		public RespBaseMsg() {
+		public AbstractRespBaseMsg() {
 			
 		}
 		

@@ -6,7 +6,7 @@ import com.ssyvsse.wechat.msg.req.ReqBaseMsg;
  * 文本消息
  *
  */
-public class RespTextMsg extends RespBaseMsg {
+public class RespTextMsg extends AbstractRespBaseMsg {
     // 回复的消息内容
     private String content;
     

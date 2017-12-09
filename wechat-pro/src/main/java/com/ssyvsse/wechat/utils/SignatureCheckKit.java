@@ -6,7 +6,7 @@ import com.ssyvsse.wechat.config.ApiConfigKit;
 
 public class SignatureCheckKit {
 	
-	public static final SignatureCheckKit me = new SignatureCheckKit();
+	public static final SignatureCheckKit ME = new SignatureCheckKit();
 	
 	/**
 	 * @param signature 微信加密签名
@@ -15,7 +15,7 @@ public class SignatureCheckKit {
 	 * @return {boolean}
 	 */
 	public boolean checkSignature(String signature, String timestamp, String nonce) {
-		String array[] = {ApiConfigKit.getApiConfig().getToken(), timestamp, nonce};
+		String[] array = {ApiConfigKit.getApiConfig().getToken(), timestamp, nonce};
 		Arrays.sort(array);
 		String tempStr = new StringBuilder().append(array[0] + array[1] + array[2]).toString();
 		tempStr = HashKit.sha1(tempStr);

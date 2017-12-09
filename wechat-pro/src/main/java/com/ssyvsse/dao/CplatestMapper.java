@@ -8,6 +8,11 @@ import org.apache.ibatis.annotations.Select;
 
 import com.ssyvsse.pojo.Cplatest;
 
+/**
+ * @author llb
+ *
+ * @Date 2017年12月8日
+ */
 public interface CplatestMapper {
 
     int insert(Cplatest record);

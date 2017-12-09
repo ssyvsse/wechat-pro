@@ -50,119 +50,118 @@ public class IndexController {
 
 	@Autowired
 	private NovelMapper novelMapper;
-	
+
 	@RequestMapping({ "/welcome", "/" })
 	public String welcome(HttpServletRequest request) {
 		int pageNo = Integer.parseInt(request.getParameter("page"));
 		int size = 1;
-		request.setAttribute("prevPage", pageNo>1?pageNo-1:1);
+		request.setAttribute("prevPage", pageNo > 1 ? pageNo - 1 : 1);
 		request.setAttribute("pageNo", pageNo);
-		request.setAttribute("nextPage", pageNo+1>=501?501:pageNo+1);
+		request.setAttribute("nextPage", pageNo + 1 >= 501 ? 501 : pageNo + 1);
 		request.setAttribute("lastPage", 501);
-		request.setAttribute("list", novelMapper.findAll((pageNo-1)*size,size));
-//		System.out.println(request.getRequestURL().toString());
-//		try {
-//			String code = request.getParameter("code");
-//			System.out.println(code);
-//			JSONObject j = getAccessToken(code);
-//			if (!j.has("errcode")) {
-//				String accessToken = (String) j.get("access_token");
-//				System.out.println(accessToken);
-//				String refreshToken = (String) j.get("refresh_token");
-//				System.out.println(refreshToken);
-//				String openid = (String) j.get("openid");
-//				System.out.println(openid);
-//				JSONObject va = isTokenValid(accessToken, openid);
-//				if ((Integer) va.get("errcode") == 0) {
-//
-//					JSONObject userInfo = getUserInfo(accessToken, openid);
-//					if (!userInfo.has("errcode")) {
-//						System.out.println(userInfo);
-//						String openid2 = userInfo.getString("openid");
-//						String nickname = userInfo.getString("nickname");
-//						String sex = userInfo.getString("sex");
-//						String province = userInfo.getString("province");
-//						String city = userInfo.getString("city");
-//						String headimgurl = userInfo.getString("headimgurl");
-//						String privilege = userInfo.getString("privilege");
-//						String unionid = userInfo.getString("unionid");
-//						WXUserInfo wxUser = new WXUserInfo();
-//						wxUser.setOpenId(openid2);
-//						wxUser.setNickname(nickname);
-//						wxUser.setSex(Integer.parseInt(sex));
-//						wxUser.setProvince(province);
-//						wxUser.setCity(city);
-//						wxUser.setHeadImgUrl(headimgurl);
-//						wxUser.setPrivilege(privilege);
-//						wxUser.setCity(unionid);
-//						System.out.println("获取到微信用户信息为：\n" + wxUser);
-//					} else {
-//						System.out.println("没有获取到微信用户信息");
-//						System.out.println(userInfo);
-//					}
-//
-//				} else {
-//					System.out.println(va);
-//					JSONObject reObj = refreshAccessToken(refreshToken);
-//					if (!reObj.has("errcode")) {
-//						System.out.println(reObj);
-//						accessToken = (String) reObj.get("access_token");
-//						System.out.println("刷新后的access_token:" + accessToken);
-//						openid = (String) reObj.get("openid");
-//						System.out.println("刷新后的openid:" + openid);
-//						JSONObject userInfo = getUserInfo(accessToken, openid);
-//						if (!userInfo.has("errcode")) {
-//							System.out.println(userInfo);
-//							String openid2 = userInfo.getString("openid");
-//							String nickname = userInfo.getString("nickname");
-//							String sex = userInfo.getString("sex");
-//							String province = userInfo.getString("province");
-//							String city = userInfo.getString("city");
-//							String headimgurl = userInfo.getString("headimgurl");
-//							String privilege = userInfo.getString("privilege");
-//							String unionid = userInfo.getString("unionid");
-//							WXUserInfo wxUser = new WXUserInfo();
-//							wxUser.setOpenId(openid2);
-//							wxUser.setNickname(nickname);
-//							wxUser.setSex(Integer.parseInt(sex));
-//							wxUser.setProvince(province);
-//							wxUser.setCity(city);
-//							wxUser.setHeadImgUrl(headimgurl);
-//							wxUser.setPrivilege(privilege);
-//							wxUser.setCity(unionid);
-//							System.out.println("获取到微信用户信息为：\n" + wxUser);
-//						} else {
-//							System.out.println("没有获取到微信用户信息");
-//							System.out.println(userInfo);
-//						}
-//					} else {
-//						System.out.println("刷新access_token失败");
-//						System.out.println(reObj);
-//					}
-//				}
-//
-//			} else {
-//				System.out.println("access_token获取错误");
-//				System.out.println(j);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		request.setAttribute("list", novelMapper.findAll((pageNo - 1) * size, size));
+		// System.out.println(request.getRequestURL().toString());
+		// try {
+		// String code = request.getParameter("code");
+		// System.out.println(code);
+		// JSONObject j = getAccessToken(code);
+		// if (!j.has("errcode")) {
+		// String accessToken = (String) j.get("access_token");
+		// System.out.println(accessToken);
+		// String refreshToken = (String) j.get("refresh_token");
+		// System.out.println(refreshToken);
+		// String openid = (String) j.get("openid");
+		// System.out.println(openid);
+		// JSONObject va = isTokenValid(accessToken, openid);
+		// if ((Integer) va.get("errcode") == 0) {
+		//
+		// JSONObject userInfo = getUserInfo(accessToken, openid);
+		// if (!userInfo.has("errcode")) {
+		// System.out.println(userInfo);
+		// String openid2 = userInfo.getString("openid");
+		// String nickname = userInfo.getString("nickname");
+		// String sex = userInfo.getString("sex");
+		// String province = userInfo.getString("province");
+		// String city = userInfo.getString("city");
+		// String headimgurl = userInfo.getString("headimgurl");
+		// String privilege = userInfo.getString("privilege");
+		// String unionid = userInfo.getString("unionid");
+		// WXUserInfo wxUser = new WXUserInfo();
+		// wxUser.setOpenId(openid2);
+		// wxUser.setNickname(nickname);
+		// wxUser.setSex(Integer.parseInt(sex));
+		// wxUser.setProvince(province);
+		// wxUser.setCity(city);
+		// wxUser.setHeadImgUrl(headimgurl);
+		// wxUser.setPrivilege(privilege);
+		// wxUser.setCity(unionid);
+		// System.out.println("获取到微信用户信息为：\n" + wxUser);
+		// } else {
+		// System.out.println("没有获取到微信用户信息");
+		// System.out.println(userInfo);
+		// }
+		//
+		// } else {
+		// System.out.println(va);
+		// JSONObject reObj = refreshAccessToken(refreshToken);
+		// if (!reObj.has("errcode")) {
+		// System.out.println(reObj);
+		// accessToken = (String) reObj.get("access_token");
+		// System.out.println("刷新后的access_token:" + accessToken);
+		// openid = (String) reObj.get("openid");
+		// System.out.println("刷新后的openid:" + openid);
+		// JSONObject userInfo = getUserInfo(accessToken, openid);
+		// if (!userInfo.has("errcode")) {
+		// System.out.println(userInfo);
+		// String openid2 = userInfo.getString("openid");
+		// String nickname = userInfo.getString("nickname");
+		// String sex = userInfo.getString("sex");
+		// String province = userInfo.getString("province");
+		// String city = userInfo.getString("city");
+		// String headimgurl = userInfo.getString("headimgurl");
+		// String privilege = userInfo.getString("privilege");
+		// String unionid = userInfo.getString("unionid");
+		// WXUserInfo wxUser = new WXUserInfo();
+		// wxUser.setOpenId(openid2);
+		// wxUser.setNickname(nickname);
+		// wxUser.setSex(Integer.parseInt(sex));
+		// wxUser.setProvince(province);
+		// wxUser.setCity(city);
+		// wxUser.setHeadImgUrl(headimgurl);
+		// wxUser.setPrivilege(privilege);
+		// wxUser.setCity(unionid);
+		// System.out.println("获取到微信用户信息为：\n" + wxUser);
+		// } else {
+		// System.out.println("没有获取到微信用户信息");
+		// System.out.println(userInfo);
+		// }
+		// } else {
+		// System.out.println("刷新access_token失败");
+		// System.out.println(reObj);
+		// }
+		// }
+		//
+		// } else {
+		// System.out.println("access_token获取错误");
+		// System.out.println(j);
+		// }
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 
 		return "welcome";
 	}
-	
-	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public JsonResult list(){
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public JsonResult list() {
 		return null;
 	}
 
 	/*
-	 * @RequestMapping(value="/customer/getRetrieveCode",method=RequestMethod.
-	 * POST)
+	 * @RequestMapping(value="/customer/getRetrieveCode",method=RequestMethod. POST)
 	 * 
-	 * @ResponseBody public JsonResult getRetrieveCode(HttpServletRequest
-	 * request, String phone, String imgcode, HttpSession session) {
+	 * @ResponseBody public JsonResult getRetrieveCode(HttpServletRequest request,
+	 * String phone, String imgcode, HttpSession session) {
 	 * session.setAttribute("loginCode", "123"); imgcode = "123"; return
 	 * userService.getRetrieveCode(request, phone, imgcode, session); }
 	 */

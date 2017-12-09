@@ -100,18 +100,18 @@ public class SMS {
 	            Element root = doc.getRootElement();
 	            List<Element> elements = root.elements();
 	            for (Element element : elements) {
-	            	if(element.getName().equals("State")){
-	            		if(element.getStringValue().equals("0")){
+	            	if("State".equals(element.getName())){
+	            		if("0".equals(element.getStringValue())){
 	            			status="0";
 	            		}
 	            	}
-	            	if(element.getName().equals("MsgState")){
+	            	if("MsgState".equals(element.getName())){
 	            		msg=element.getStringValue();
 	            	}
 	            }
-	            if(status.equals("0")){
+	            if("0".equals(status)){
 	            	return JsonResult.success(msg);
-	            }else if(status.equals("-1")){
+	            }else if("-1".equals(status)){
 	            	return JsonResult.failure(msg);
 	            }
 			} catch (Exception  e) {

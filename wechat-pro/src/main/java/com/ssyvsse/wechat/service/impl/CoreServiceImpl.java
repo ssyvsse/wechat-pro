@@ -19,7 +19,7 @@ import com.ssyvsse.wechat.msg.req.ReqNotDefinedMsg;
 import com.ssyvsse.wechat.msg.req.ReqTextMsg;
 import com.ssyvsse.wechat.msg.req.event.ClickEventMsg;
 import com.ssyvsse.wechat.msg.req.event.FollowEventMsg;
-import com.ssyvsse.wechat.msg.resp.RespBaseMsg;
+import com.ssyvsse.wechat.msg.resp.AbstractRespBaseMsg;
 import com.ssyvsse.wechat.msg.resp.RespTextMsg;
 import com.ssyvsse.wechat.service.CoreService;
 import com.ssyvsse.wechat.utils.MsgUtils;
@@ -55,14 +55,14 @@ public class CoreServiceImpl implements CoreService {
 			Map<String, String> requestMap = MsgUtils.parseXml(request);
 			System.out.println(requestMap);
 			reqBaseMsg = getReqMsg(requestMap);
-			if(requestMap.containsKey("Event")){
-				if(requestMap.get("Event").equals("CLICK")){
+			if (requestMap.containsKey("Event")) {
+				if (requestMap.get("Event").equals("CLICK")) {
 					respContent = "请选择菜单:\n1、查看脑筋急转弯";
 				}
-				if(requestMap.get("Event").equals("VIEW")){
+				if (requestMap.get("Event").equals("VIEW")) {
 					respContent = "请选择菜单:\n2、查看计算题\n";
 				}
-				
+
 			}
 			// 发送过来的消息内容
 			if (reqBaseMsg instanceof ReqTextMsg) {
@@ -89,6 +89,8 @@ public class CoreServiceImpl implements CoreService {
 							switch (menu) {
 							case 1:
 								respContent = showHead(subMenu);
+								break;
+							default:
 								break;
 							}
 						}
@@ -152,7 +154,7 @@ public class CoreServiceImpl implements CoreService {
 		return reqBaseMsg;
 	}
 
-	public void sendMsg(RespBaseMsg respBaseMsg, HttpServletRequest request, HttpServletResponse response) {
+	public void sendMsg(AbstractRespBaseMsg respBaseMsg, HttpServletRequest request, HttpServletResponse response) {
 		String respMsgXml = respBaseMsg.toXml();
 		// 开发模式向控制台输出即将发送的消息的 xml 内容
 		if (ApiConfigKit.isDevMode()) {

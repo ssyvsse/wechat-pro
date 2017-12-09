@@ -166,7 +166,7 @@ private static String login;
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return ip.equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : ip;
+		return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
 	}
 	
 	

@@ -3,6 +3,11 @@ package com.ssyvsse.pojo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * @author llb
+ *
+ * @Date 2017年12月8日
+ */
 public class CpHistory implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -69,8 +74,9 @@ public class CpHistory implements Serializable {
 		if (audittime.indexOf(".") > 0) {
 			int i = audittime.indexOf(".");
 			this.audittime = audittime.substring(0, i);
-		} else
+		} else {
 			this.audittime = audittime;
+		}
 	}
 
 	public int getTypeid() {
@@ -155,8 +161,9 @@ public class CpHistory implements Serializable {
 		if (createtime.indexOf(".") > 0) {
 			int i = createtime.indexOf(".");
 			this.createtime = createtime.substring(0, i);
-		} else
+		} else {
 			this.createtime = createtime;
+		}
 	}
 
 	public String getOpendate() {

@@ -50,26 +50,33 @@ public class StrKit {
 	}
 	
 	public static boolean notBlank(String... strings) {
-		if (strings == null)
+		if (strings == null) {
 			return false;
-		for (String str : strings)
-			if (str == null || "".equals(str.trim()))
+		}
+		for (String str : strings) {
+			if (str == null || "".equals(str.trim())) {
 				return false;
+			}
+		}
 		return true;
 	}
 	
 	public static boolean notNull(Object... paras) {
-		if (paras == null)
+		if (paras == null) {
 			return false;
-		for (Object obj : paras)
-			if (obj == null)
+		}
+		for (Object obj : paras) {
+			if (obj == null) {
 				return false;
+			}
+		}
 		return true;
 	}
 	
 	public static String toCamelCase(String stringWithUnderline) {
-		if (stringWithUnderline.indexOf('_') == -1)
+		if (stringWithUnderline.indexOf('_') == -1) {
 			return stringWithUnderline;
+		}
 		
 		stringWithUnderline = stringWithUnderline.toLowerCase();
 		char[] fromArray = stringWithUnderline.toCharArray();
@@ -79,8 +86,9 @@ public class StrKit {
 			if (fromArray[i] == '_') {
 				// 当前字符为下划线时，将指针后移一位，将紧随下划线后面一个字符转成大写并存放
 				i++;
-				if (i < fromArray.length)
+				if (i < fromArray.length) {
 					toArray[j++] = Character.toUpperCase(fromArray[i]);
+				}
 			}
 			else {
 				toArray[j++] = fromArray[i];
@@ -91,16 +99,18 @@ public class StrKit {
 	
 	public static String join(String[] stringArray) {
 		StringBuilder sb = new StringBuilder();
-		for (String s : stringArray)
+		for (String s : stringArray) {
 			sb.append(s);
+		}
 		return sb.toString();
 	}
 	
 	public static String join(String[] stringArray, String separator) {
 		StringBuilder sb = new StringBuilder();
 		for (int i=0; i<stringArray.length; i++) {
-			if (i>0)
+			if (i>0) {
 				sb.append(separator);
+			}
 			sb.append(stringArray[i]);
 		}
 		return sb.toString();
@@ -108,8 +118,9 @@ public class StrKit {
 	public static String join(Object[] objectArray, String separator) {
 		StringBuilder sb = new StringBuilder();
 		for (int i=0; i<objectArray.length; i++) {
-			if (i>0)
+			if (i>0) {
 				sb.append(separator);
+			}
 			sb.append(objectArray[i]);
 		}
 		return sb.toString();
@@ -120,8 +131,9 @@ public class StrKit {
 		}
 		StringBuilder sb = new StringBuilder();
 		for (int i=0; i<stringList.size(); i++) {
-			if (i>0)
+			if (i>0) {
 				sb.append(separator);
+			}
 			sb.append(stringList.get(i));
 		}
 		return sb.toString();

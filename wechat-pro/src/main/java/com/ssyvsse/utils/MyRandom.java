@@ -2,6 +2,11 @@ package com.ssyvsse.utils;
 
 import java.util.Random;
 
+/**
+ * @author llb
+ *
+ * @Date 2017年12月8日
+ */
 public class MyRandom {
 
 	public static String randomCode(int Count) {

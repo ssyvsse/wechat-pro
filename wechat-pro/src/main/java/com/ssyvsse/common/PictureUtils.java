@@ -55,7 +55,7 @@ public class PictureUtils {
 	 * @param srcImgPath
 	 * @return
 	 */
-	private static BufferedImage InputImage(String srcImgPath) {
+	private static BufferedImage inputImage(String srcImgPath) {
 		BufferedImage srcImage = null;
 		FileInputStream in = null;
 		try {
@@ -84,13 +84,13 @@ public class PictureUtils {
 	 *            :源图片路径
 	 * @param outImgPath
 	 *            :输出的压缩图片的路径
-	 * @param new_w
+	 * @param newWidth
 	 *            :压缩后的图片宽
-	 * @param new_h
+	 * @param newHeigh
 	 *            :压缩后的图片高
 	 */
 	public static void compressImage(String srcImgPath, String outImgPath) {
-		BufferedImage src = InputImage(srcImgPath);
+		BufferedImage src = inputImage(srcImgPath);
 		disposeImage(src, outImgPath);
 	}
 
@@ -106,24 +106,24 @@ public class PictureUtils {
 	 */
 	public static void compressImage(String srcImgPath, String outImgPath, int maxLength) {
 		// 得到图片
-		BufferedImage src = InputImage(srcImgPath);
+		BufferedImage src = inputImage(srcImgPath);
 		if (null != src) {
-			int old_w = src.getWidth();
+			int oldWith = src.getWidth();
 			// 得到源图宽
-			int old_h = src.getHeight();
+			int oldHeigh = src.getHeight();
 			// 得到源图长
-			int new_w = 0;
+			int newWidth = 0;
 			// 新图的宽
-			int new_h = 0;
+			int newHeigh = 0;
 			// 新图的长
 			// 根据图片尺寸压缩比得到新图的尺寸
-			if (old_w > old_h) {
+			if (oldWith > oldHeigh) {
 				// 图片要缩放的比例
-				new_w = maxLength;
-				new_h = (int) Math.round(old_h * ((float) maxLength / old_w));
+				newWidth = maxLength;
+				newHeigh = (int) Math.round(oldHeigh * ((float) maxLength / oldWith));
 			} else {
-				new_w = (int) Math.round(old_w * ((float) maxLength / old_h));
-				new_h = maxLength;
+				newWidth = (int) Math.round(oldWith * ((float) maxLength / oldHeigh));
+				newHeigh = maxLength;
 			}
 			disposeImage(src, outImgPath);
 		}
@@ -134,36 +134,36 @@ public class PictureUtils {
 	 * 
 	 * @param src
 	 * @param outImgPath
-	 * @param new_w
-	 * @param new_h
+	 * @param newWidth
+	 * @param newHeigh
 	 */
 	private synchronized static void disposeImage(BufferedImage src, String outImgPath) {
 		// 得到图片
-		int old_w = src.getWidth();
+		int oldWith = src.getWidth();
 		// 得到源图宽
-		int old_h = src.getHeight();
+		int oldHeigh = src.getHeight();
 		// 得到源图长
 		BufferedImage newImg = null;
 		// 判断输入图片的类型
 		switch (src.getType()) {
 		case 13:
-			// png,gifnewImg = new BufferedImage(new_w, new_h,
+			// png,gifnewImg = new BufferedImage(newWidth, newHeigh,
 			// BufferedImage.TYPE_4BYTE_ABGR);
 			break;
 		default:
-			newImg = new BufferedImage(old_w, old_h, BufferedImage.TYPE_BYTE_INDEXED);
+			newImg = new BufferedImage(oldWith, oldHeigh, BufferedImage.TYPE_BYTE_INDEXED);
 			break;
 		}
 		Graphics2D g = newImg.createGraphics();
 		// 从原图上取颜色绘制新图
-		g.drawImage(src, 0, 0, old_w, old_h, null);
+		g.drawImage(src, 0, 0, oldWith, oldHeigh, null);
 		g.dispose();
 		// 根据图片尺寸压缩比得到新图的尺寸
-		newImg.getGraphics().drawImage(src.getScaledInstance(old_w, old_h, Image.SCALE_AREA_AVERAGING), 0, 0, null);
+		newImg.getGraphics().drawImage(src.getScaledInstance(oldWith, oldHeigh, Image.SCALE_AREA_AVERAGING), 0, 0, null);
 		newImg.getGraphics().dispose();
 		src.flush();
 		// 调用方法输出图片文件
-		OutImage(outImgPath, newImg);
+		outImage(outImgPath, newImg);
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class PictureUtils {
 	 * @param newImg
 	 * @param per
 	 */
-	private static void OutImage(String outImgPath, BufferedImage newImg) {
+	private static void outImage(String outImgPath, BufferedImage newImg) {
 		// 判断输出的文件夹路径是否存在，不存在则创建
 		File file = new File(outImgPath);
 		if (!file.getParentFile().exists()) {
@@ -192,12 +192,12 @@ public class PictureUtils {
 		}finally{
 			
 			try {
-				if(out != null)
+				if(out != null) {
 					out.close();
+				}
 				newImg.flush();
 				newImg=null;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

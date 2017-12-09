@@ -8,6 +8,11 @@ import org.apache.ibatis.annotations.Update;
 
 import com.ssyvsse.pojo.CpHistory;
 
+/**
+ * @author llb
+ *
+ * @Date 2017年12月8日
+ */
 public interface CpHistoryMapper {
 
 	@Update("update ${shortpy} set img=#{img} where no=#{no}")

@@ -8,11 +8,10 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 /**
  * @author llb
+ * @Configuration @EnableWebSocketMessageBroker//1 @author llb
  *
- * @Date 2017年12月6日 下午10:18:35
+ * @Date 2017年12月8日 下午16:15:35
  */
-//@Configuration
-//@EnableWebSocketMessageBroker//1
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	/*
@@ -25,12 +24,12 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/endpointSang").withSockJS();//2
+		registry.addEndpoint("/endpointSang").withSockJS();// 2
 	}
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/topic");//3
+		registry.enableSimpleBroker("/topic");// 3
 
 	}
 

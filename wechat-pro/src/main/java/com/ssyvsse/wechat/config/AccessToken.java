@@ -8,6 +8,10 @@ import com.ssyvsse.base.entity.support.BaseEntity;
 
 /**
  * 封装 access_token
+ * 
+ * @author llb
+ *
+ * @Date 2017年12月8日
  */
 public class AccessToken extends BaseEntity implements Serializable {
 
@@ -35,9 +39,9 @@ public class AccessToken extends BaseEntity implements Serializable {
 			errcode = getInt(temp, "errcode");
 			errmsg = (String) temp.get("errmsg");
 
-			if (expires_in != null)
+			if (expires_in != null) {
 				expiredTime = System.currentTimeMillis() + ((expires_in - 5) * 1000);
-
+			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -48,12 +52,15 @@ public class AccessToken extends BaseEntity implements Serializable {
 	}
 
 	public boolean isAvailable() {
-		if (expiredTime == null)
+		if (expiredTime == null) {
 			return false;
-		if (errcode != null)
+		}
+		if (errcode != null) {
 			return false;
-		if (expiredTime < System.currentTimeMillis())
+		}
+		if (expiredTime < System.currentTimeMillis()) {
 			return false;
+		}
 		return access_token != null;
 	}
 
@@ -77,8 +84,9 @@ public class AccessToken extends BaseEntity implements Serializable {
 	public String getErrorMsg() {
 		if (errcode != null) {
 			String result = ReturnCode.get(errcode);
-			if (result != null)
+			if (result != null) {
 				return result;
+			}
 		}
 		return errmsg;
 	}

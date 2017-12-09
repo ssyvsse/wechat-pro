@@ -77,7 +77,7 @@ public class WechatController extends BaseWechatController {
 		String signature = request.getParameter("signature");
 		String timestamp = request.getParameter("timestamp");
 		String nonce = request.getParameter("nonce");
-		boolean isOk = SignatureCheckKit.me.checkSignature(signature, timestamp, nonce);
+		boolean isOk = SignatureCheckKit.ME.checkSignature(signature, timestamp, nonce);
 		if (isOk) {
 			try {
 				response.getWriter().write(echostr);
@@ -109,7 +109,7 @@ public class WechatController extends BaseWechatController {
 			return false;
 		}
 
-		if (SignatureCheckKit.me.checkSignature(signature, timestamp, nonce)) {
+		if (SignatureCheckKit.ME.checkSignature(signature, timestamp, nonce)) {
 			return true;
 		} else {
 

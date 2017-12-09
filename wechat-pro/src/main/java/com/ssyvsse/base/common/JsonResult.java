@@ -14,14 +14,25 @@ import java.io.Serializable;
  *
  */
 public class JsonResult implements Serializable {
+
 	private static final long serialVersionUID = -1491499610244557029L;
+
 	public static int CODE_SUCCESS = 0;
+
 	public static int CODE_FAILURED = -1;
+
 	public static String[] NOOP = new String[] {};
 
-	private int code; // 处理状态：0: 成功
+	/**
+	 * 处理状态：0: 成功
+	 */
+	private int code;
+
 	private String message;
-	private Object data; // 返回数据
+	/**
+	 * 返回数据
+	 */
+	private Object data;
 
 	private JsonResult(int code, String message, Object data) {
 		this.code = code;
@@ -39,7 +50,7 @@ public class JsonResult implements Serializable {
 	public static final JsonResult success(Object data) {
 		return new JsonResult(CODE_SUCCESS, "操作成功", data);
 	}
-	
+
 	/**
 	 * 处理成功
 	 * 
@@ -125,10 +136,7 @@ public class JsonResult implements Serializable {
 
 	@Override
 	public String toString() {
-		return "JsonResult [code=" + code + ", message=" + message + ", data="
-				+ data + "]";
+		return "JsonResult [code=" + code + ", message=" + message + ", data=" + data + "]";
 	}
-	
-	
-}
 
+}

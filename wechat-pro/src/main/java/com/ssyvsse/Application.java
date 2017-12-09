@@ -23,7 +23,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 @ServletComponentScan
 @MapperScan({ "com.ssyvsse.dao", "com.ssyvsse.base.dao", "com.ssyvsse.wechat.dao" })
 @PropertySource("classpath:mybatis_test.properties")
-@Configuration
+@Configuration 
 public class Application {
 
 	@Autowired

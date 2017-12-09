@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 
 public class HashKit {
 	
-	private static final java.security.SecureRandom random = new java.security.SecureRandom();
+	private static final java.security.SecureRandom RANDOM = new java.security.SecureRandom();
 	private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 	
 	public static String md5(String srcStr){
@@ -56,7 +56,7 @@ public class HashKit {
 	 */
 	public static String generateSalt(int numberOfBytes) {
 		byte[] salt = new byte[numberOfBytes];
-		random.nextBytes(salt);
+		RANDOM.nextBytes(salt);
 		return toHex(salt);
 	}
 }

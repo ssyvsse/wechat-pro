@@ -26,12 +26,15 @@ public class MsgParser {
 		String msgId = requestMap.get("MsgId");
 		String event = requestMap.get("Event");
 		String eventKey = requestMap.get("EventKey"); 
-		if ("text".equals(msgType))
+		if ("text".equals(msgType)) {
 			return new ReqTextMsg(toUserName, fromUserName, createTime, msgType,content,msgId);
-		if ("image".equals(msgType))
+		}
+		if ("image".equals(msgType)) {
 			return new ReqImageMsg(toUserName,  fromUserName, createTime, msgType);
-		if ("link".equals(msgType))
+		}
+		if ("link".equals(msgType)) {
 			return new ReqLinkMsg(toUserName, fromUserName, createTime, msgType);
+		}
 		if ("event".equals(msgType)) {
 			if("subscribe".equals(event)) {
 				return new FollowEventMsg(toUserName, fromUserName, createTime, msgType, event);
