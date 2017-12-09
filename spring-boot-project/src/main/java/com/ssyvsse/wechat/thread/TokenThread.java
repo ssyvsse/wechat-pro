@@ -10,7 +10,7 @@ import com.ssyvsse.wechat.config.AccessToken;
 import com.ssyvsse.wechat.config.ApiConfig;
 import com.ssyvsse.wechat.config.ApiConfigKit;
 import com.ssyvsse.wechat.menu.MenuApi;
-import com.ssyvsse.wechat.utils.WechtPropUtil;
+import com.ssyvsse.wechat.utils.WechatPropUtil;
 import com.ssyvsse.wechat.utils.WeixinUtil;
 
 /**
@@ -30,12 +30,12 @@ public class TokenThread {
 	/**
 	 * 第三方用户唯一凭证
 	 */
-	public static String appid = WechtPropUtil.prop.getProperty("wechat.app_id").trim();
+	public static String appid = WechatPropUtil.prop.getProperty("wechat.app_id").trim();
 
 	/**
 	 * 第三方用户唯一凭证密钥
 	 */
-	public static String appsecret = WechtPropUtil.prop.getProperty("wechat.app_secret").trim();
+	public static String appsecret = WechatPropUtil.prop.getProperty("wechat.app_secret").trim();
 
 	/**
 	 * 第三方用户唯一凭证
@@ -53,13 +53,13 @@ public class TokenThread {
 		if (null != accessToken) {
 			if (sign == 0) {
 				ApiConfig ac = new ApiConfig();
-				ac.setToken(WechtPropUtil.prop.getProperty("wechat.token").trim());
-				ac.setAppId(WechtPropUtil.prop.getProperty("wechat.app_id").trim());
-				ac.setAppSecret(WechtPropUtil.prop.getProperty("wechat.app_secret").trim());
-				ac.setOauthUrl(WechtPropUtil.prop.getProperty("wechat.oauth_url").trim());
+				ac.setToken(WechatPropUtil.prop.getProperty("wechat.token").trim());
+				ac.setAppId(WechatPropUtil.prop.getProperty("wechat.app_id").trim());
+				ac.setAppSecret(WechatPropUtil.prop.getProperty("wechat.app_secret").trim());
+				ac.setOauthUrl(WechatPropUtil.prop.getProperty("wechat.oauth_url").trim());
 				ac.setEncryptMessage(
-						Boolean.parseBoolean(WechtPropUtil.prop.getProperty("wechat.encrypt_message").trim()));
-				ac.setEncodingAesKey(WechtPropUtil.prop.getProperty("wechat.encoding_aeskey").trim());
+						Boolean.parseBoolean(WechatPropUtil.prop.getProperty("wechat.encrypt_message").trim()));
+				ac.setEncodingAesKey(WechatPropUtil.prop.getProperty("wechat.encoding_aeskey").trim());
 				ApiConfigKit.setThreadLocalApiConfig(ac);
 				int result = MenuApi.createMenu(accessToken.getAccess_token());
 				sign = 1;

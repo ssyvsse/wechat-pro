@@ -1,5 +1,7 @@
 package com.ssyvsse.wechat.menu;
 
+import java.io.UnsupportedEncodingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,16 +43,22 @@ public class MenuApi {
 		// 拼装创建菜单的url
 		String url = menu_create_url.replace("ACCESS_TOKEN", accessToken);
 		// 将菜单对象转换成json字符串
-		String jsonMenu = JSONObject.fromObject(MenuManage.getMenu()).toString();
-		log.info("jsonMenu的josn" + jsonMenu);
-		// 调用接口创建菜单
-		JSONObject jsonObject = WeixinUtil.httpRequest(url, "POST", jsonMenu);
+		String jsonMenu = null;
+		try {
+			jsonMenu = JSONObject.fromObject(MenuManage.getMenu()).toString();
+			log.info("jsonMenu的josn" + jsonMenu);
+			// 调用接口创建菜单
+			JSONObject jsonObject = WeixinUtil.httpRequest(url, "POST", jsonMenu);
 
-		if (null != jsonObject) {
-			if (0 != jsonObject.getInt("errcode")) {
-				result = jsonObject.getInt("errcode");
-				log.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+			if (null != jsonObject) {
+				if (0 != jsonObject.getInt("errcode")) {
+					result = jsonObject.getInt("errcode");
+					log.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"),
+							jsonObject.getString("errmsg"));
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
