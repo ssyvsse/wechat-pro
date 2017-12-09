@@ -56,11 +56,4 @@ public class NetUtils {
 		return new StringBuffer(url).toString();
 	}
 	
-	
-	
-	
-	public static String baiduSpiderURL(String website,Integer baiduID){
-		String url = website + baiduID;
-		return new StringBuffer(url).toString();
-	}
 }
