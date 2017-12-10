@@ -22,10 +22,10 @@ public class InstantiationTracingBeanPostProcessor implements ApplicationListene
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if (event.getApplicationContext().getParent() == null) {
 
-			System.out.println("=====================================");
+			System.out.println("=======================================");
 			System.out.println("=========spring 初始化完成 =============");
 			System.out.println("=========spring 初始化完成 =============");
-			System.out.println("=====================================");
+			System.out.println("=======================================");
 
 			// 注入版本号
 			servletContext.setAttribute("version", (int) (Math.random() * 1000000));

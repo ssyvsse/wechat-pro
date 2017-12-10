@@ -80,9 +80,6 @@ public class AccessToken implements Serializable {
 		return number == null ? null : number.intValue();
 	}
 	
-	public String getaccess_token() {
-		return access_token;
-	}
 	
 	public Long getExpiredTime() {
 		return expiredTime;

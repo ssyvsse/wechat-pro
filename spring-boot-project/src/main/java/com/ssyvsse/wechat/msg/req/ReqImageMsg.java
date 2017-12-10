@@ -8,10 +8,13 @@ public class ReqImageMsg extends ReqBaseMsg {
 	private String mediaId;
 	private String msgId;
 	
-	public ReqImageMsg(String toUserName, String fromUserName, Integer createTime, String msgType) {
+	public ReqImageMsg(String toUserName, String fromUserName, Integer createTime, String msgType,String picUrl,String mediaId,String msgId) {
 		super(toUserName, fromUserName, createTime, msgType);
+		this.picUrl = picUrl;
+		this.mediaId = mediaId;
+		this.msgId = msgId;
 	}
-	
+
 	public String getPicUrl() {
 		return picUrl;
 	}
