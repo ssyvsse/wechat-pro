@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ssyvsse.base.common.JsonResult;
 import com.ssyvsse.wechat.menu.MenuApi;
-import com.ssyvsse.wechat.thread.ServiceTokenThread;
 import com.ssyvsse.wechat.thread.TokenThread;
 
 import net.sf.json.JSONObject;

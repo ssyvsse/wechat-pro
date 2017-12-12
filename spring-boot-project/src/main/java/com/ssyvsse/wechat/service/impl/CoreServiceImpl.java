@@ -81,10 +81,13 @@ public class CoreServiceImpl implements CoreService {
 					String content = ((ReqTextMsg) reqBaseMsg).getContent().trim();
 					if ("你好".equals(content)) {
 						respContent = "你好";
+						textTypeResp(respContent, requestMap, request, response);
 					} else if ("大家好".equals(content)) {
 						respContent = "大家好";
+						textTypeResp(respContent, requestMap, request, response);
 					} else if ("同志们好".equals(content)) {
 						respContent = "为人民服务";
+						textTypeResp(respContent, requestMap, request, response);
 					} else if (content.indexOf("图片") >= 0 && content.length() >= 3) {
 						String str = content.substring(2);
 						boolean result = true;

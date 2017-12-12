@@ -19,15 +19,18 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.stereotype.Component;
 
 /**
  * @author llb
  *
  * @Date 2017年12月8日 下午7:46:10
- * @Component
- * @EnableScheduling
+ * 
+ * 
  */
+@Component
+@EnableScheduling
 public class CrawlJob {
 
 	/**
@@ -153,7 +156,7 @@ public class CrawlJob {
 		}
 
 		try {
-			OutputStream outputStream = new FileOutputStream(new File("C:/Users/2349/Desktop/sss.xlsx"));
+			OutputStream outputStream = new FileOutputStream(new File("C:/Users/2349/Desktop/sss.xls"));
 			workbook.write(outputStream);
 			outputStream.flush();
 			outputStream.close();

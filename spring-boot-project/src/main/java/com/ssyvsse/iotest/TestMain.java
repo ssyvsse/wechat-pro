@@ -24,7 +24,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  */
 public class TestMain {
 	public static void main(String[] args) {
-		File file = new File("C:/Users/2349/Desktop/nginx-log");
+		File file = new File("C:/Users/2349/Desktop/log");
 		File[] files = file.listFiles();
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -121,7 +121,7 @@ public class TestMain {
 		 */
 
 		try {
-			OutputStream outputStream = new FileOutputStream(new File("C:/Users/2349/Desktop/2349url.xls"));
+			OutputStream outputStream = new FileOutputStream(new File("C:/Users/2349/Desktop/2349url 2017-12-11.xls"));
 			workbook.write(outputStream);
 			outputStream.flush();
 			outputStream.close();

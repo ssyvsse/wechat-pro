@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.ssyvsse.utils.DateUtils;
 import com.ssyvsse.wechat.entity.WXUserInfo;
-import com.ssyvsse.wechat.thread.ServiceTokenThread;
 import com.ssyvsse.wechat.thread.TokenThread;
 import com.ssyvsse.wechat.utils.WeixinUtil;
 
@@ -67,9 +66,9 @@ public class WXUserApi {
 	public static JSONObject getFollowers(String nextOpenid) {
 		String requestUrl = null;
 		if (nextOpenid != null) {
-			requestUrl = getFollowers.replace("ACCESS_TOKEN",  ServiceTokenThread.accessToken.getAccess_token()).replace("NEXT_OPENID", nextOpenid);
+			requestUrl = getFollowers.replace("ACCESS_TOKEN",  TokenThread.accessToken.getAccess_token()).replace("NEXT_OPENID", nextOpenid);
 		}else {
-			requestUrl = getFollowers.replace("ACCESS_TOKEN",  ServiceTokenThread.accessToken.getAccess_token()).replace("&next_openid=NEXT_OPENID", "");
+			requestUrl = getFollowers.replace("ACCESS_TOKEN",  TokenThread.accessToken.getAccess_token()).replace("&next_openid=NEXT_OPENID", "");
 		}
 		return WeixinUtil.httpRequest(requestUrl, "POST",  null);
 	}
@@ -80,7 +79,7 @@ public class WXUserApi {
 	 * @return ApiResult
 	 */
 	public static JSONObject batchGetUserInfo(String jsonStr) {
-		String requestUrl = batchGetUserInfo.replace("ACCESS_TOKEN",  ServiceTokenThread.accessToken.getAccess_token());
+		String requestUrl = batchGetUserInfo.replace("ACCESS_TOKEN",  TokenThread.accessToken.getAccess_token());
 		return WeixinUtil.httpRequest(requestUrl, "POST",  jsonStr);
 	}
 	
@@ -113,7 +112,7 @@ public class WXUserApi {
 	 * @return {ApiResult}
 	 */
 	public static JSONObject updateRemark(String openid, String remark) {
-		String requestUrl = updateRemarkUrl.replace("ACCESS_TOKEN",  ServiceTokenThread.accessToken.getAccess_token()).replace("OPENID", openid);
+		String requestUrl = updateRemarkUrl.replace("ACCESS_TOKEN",  TokenThread.accessToken.getAccess_token()).replace("OPENID", openid);
 		return WeixinUtil.httpRequest(requestUrl, "GET", null);
 	}
 }
