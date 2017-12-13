@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -43,7 +45,7 @@ public class TestMain2 {
 	private CpHistoryMapper cpHistoryMapper;
 
 	@Scheduled(fixedDelay = 1000 * 60)
-	public void method1() {
+	public void method1() throws ParseException {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFCellStyle style = workbook.createCellStyle();
 		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
@@ -63,13 +65,13 @@ public class TestMain2 {
 			sheet.setDefaultRowHeightInPoints(20);
 
 			String[] dates = { "开奖时间", "2017-12-03", "2017-12-02", "2017-12-01", "2017-11-30", "2017-11-29",
-					"2017-11-28", "2017-11-27" };
+					"2017-11-28", "2017-11-27","最小时间(单位:分:秒)","最大时间(单位:分:秒)","平均时间(单位:分:秒)" };
 			HSSFRow row = sheet.createRow(0);
 			List<CpHistory> histories = null;
 			HSSFCell cell = null;
 			openTime = openTimeMapper.findByTypeid(typeids[i]);
 			for (int j = 0; j < dates.length; j++) {
-				cell = row.createCell(j+1);
+				cell = row.createCell(j);
 				cell.setCellValue(dates[j]);
 			}
 			
@@ -85,9 +87,10 @@ public class TestMain2 {
 				}else {
 					histories = cpHistoryMapper.selectByDate(dates[j], typeids[i]);
 					for (int j2 = 0,len=histories.size(); j2 < len; j2++) {
-						String time = histories.get(j2).getCreatetime().substring(11);
+						String time = histories.get(j2).getCreatetime().trim();
 						row = sheet.getRow(rows++);
-						row.createCell(j).setCellValue(time);
+						HSSFCell cell1 = row.createCell(j);
+						cell1.setCellValue(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(time));
 					}
 				}
 			}
