@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.dao.OpenTimeMapper" >
+	
+	<resultMap type="com.ssyvsse.pojo.OpenTime" id="openTimeResult">
+		<result column="typeid"	property="typeid"/>
+		<result column="no" property="no"/>
+		<result column="opentime" property="opentime"/>	
+	</resultMap>
+	
+	<select id="findByTypeid" resultMap="openTimeResult">
+		select * from open_time where typeid=#{typeid}
+	</select>
+	
+</mapper>
