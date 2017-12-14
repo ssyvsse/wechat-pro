@@ -21,8 +21,8 @@ import com.ssyvsse.wechat.utils.WeixinUtil;
  *
  * @Date 2017年12月9日
  */
-@Component("tokenThread")
-@EnableScheduling
+//@Component("tokenThread")
+//@EnableScheduling
 public class TokenThread {
 
 	private static Logger log = LoggerFactory.getLogger(TokenThread.class);
