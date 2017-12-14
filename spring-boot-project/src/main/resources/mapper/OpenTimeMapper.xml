@@ -12,4 +12,12 @@
 		select * from open_time where typeid=#{typeid}
 	</select>
 	
+	<update id="addPeriod">
+		update open_time set period=#{period} where typeid=#{typeid} and no=#{no} and opentime=#{opentime}
+	</update>
+	
+	<select id="getNewNoByPeriodAndTypeId" resultType="java.lang.Integer">
+		select no from open_time where period=#{period} and typeid=#{typeid}
+	</select>
+	
 </mapper>

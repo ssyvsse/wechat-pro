@@ -31,8 +31,8 @@ import com.ssyvsse.pojo.OpenTime;
  *
  * @Date 2017年12月9日
  */
-@Component
-@EnableScheduling
+//@Component
+//@EnableScheduling
 public class TestMain2 {
 
 	@Autowired
@@ -107,7 +107,7 @@ public class TestMain2 {
 
 	}
 
-	@Scheduled(fixedDelay = 1000 * 60)
+	//@Scheduled(fixedDelay = 1000 * 60)
 	public void method2() throws ParseException {
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		HSSFCellStyle style = workbook.createCellStyle();
