@@ -15,4 +15,7 @@ public interface OpenTimeMapper {
 	
 	List<OpenTime> findByTypeid(@Param("typeid")int typid);
 	
+	void addPeriod(OpenTime openTime);
+	
+	int getNewNoByPeriodAndTypeId(@Param("period")String period,@Param("typeid")int typeid);
 }

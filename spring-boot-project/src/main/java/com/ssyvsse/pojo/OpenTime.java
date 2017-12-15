@@ -9,6 +9,7 @@ public class OpenTime {
 	private Integer typeid;
 	private Integer no;
 	private String opentime;
+	private String period;
 
 	public Integer getTypeid() {
 		return typeid;
@@ -33,4 +34,19 @@ public class OpenTime {
 	public void setOpentime(String opentime) {
 		this.opentime = opentime;
 	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	@Override
+	public String toString() {
+		return "OpenTime [typeid=" + typeid + ", no=" + no + ", opentime=" + opentime + ", period=" + period + "]";
+	}
+
+	
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.dao.Cp_high_infoMapper" >
+ 
+  
+  <select id="selectAll" resultType="com.ssyvsse.pojo.Cp_high_info" >
+    select	* from cp_high_info,cp_high_type WHERE cp_high_info.cp_high_typeid=cp_high_type.id  order by cp_high_info.id asc
+    
+  </select>
+  
+  <select id="find" resultType="com.ssyvsse.pojo.Cp_high_info" parameterType="int">
+  select * from cp_high_info INNER JOIN cp_high_type ON cp_high_info.cp_high_typeid=cp_high_type.id WHERE cp_high_info.id=#{id}
+  </select>
+  
+  <select id="findAllByLike" resultType="com.ssyvsse.pojo.Cp_high_info" parameterType="int">
+  select * from cp_high_info INNER JOIN cp_high_type ON cp_high_info.cp_high_typeid=cp_high_type.id WHERE cp_high_type.id=#{id}
+  </select>
+  
+  <update id="update" parameterType="com.ssyvsse.pojo.Cp_high_info" >
+    UPDATE cp_high_info SET
+	show_name=#{show_name,jdbcType=VARCHAR},
+	short_name=#{short_name,jdbcType=VARCHAR},
+	frequency=#{frequency,jdbcType=VARCHAR},
+	times=#{times,jdbcType=INTEGER},
+	stop_delay=#{stop_delay,jdbcType=INTEGER},
+	max_bonus=#{max_bonus},
+	sort=#{sort,jdbcType=INTEGER},
+	status=#{status,jdbcType=INTEGER},
+	description=#{description,jdbcType=VARCHAR},
+	platform=#{platform,jdbcType=VARCHAR},
+	notype=#{notype}
+	WHERE id=#{id}
+  </update>
+  
+  <delete id="deleteCp" parameterType="int">
+    delete from cp_high_info
+	where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="add" parameterType="com.ssyvsse.pojo.Cp_high_info">
+  insert into cp_high_info (id,
+		show_name, short_name,
+		frequency,cp_high_typeid,
+		times,stop_delay,max_bonus,
+		sort,description,platform,notype)
+		values (#{id,jdbcType=INTEGER},
+		#{show_name,jdbcType=VARCHAR},
+		#{short_name,jdbcType=VARCHAR},
+		#{frequency,jdbcType=VARCHAR},
+		#{cp_high_typeid,jdbcType=INTEGER}, 
+		#{times,jdbcType=INTEGER}, 
+		#{stop_delay,jdbcType=INTEGER}, 
+		#{max_bonus}, 
+		#{sort,jdbcType=INTEGER}, 
+		#{description,jdbcType=VARCHAR},
+		#{platform,jdbcType=VARCHAR},
+		#{notype})
+  </insert>
+</mapper>

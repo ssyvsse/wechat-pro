@@ -29,8 +29,8 @@ import org.springframework.stereotype.Component;
  * 
  * 
  */
-@Component
-@EnableScheduling
+//@Component
+//@EnableScheduling
 public class CrawlJob {
 
 	/**
