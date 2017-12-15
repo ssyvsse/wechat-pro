@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.dao.PlatformMapper">
+	<select id="getAllPlatForm" resultType="com.ssyvsse.pojo.Platform">
+		SELECT * FROM platform
+	</select>
+	
+	<select id="getCpByPlatform" resultType="com.ssyvsse.pojo.Cp_platform">
+		SELECT * FROM cp_platform WHERE platform = #{platform} AND `status` = 0;
+	</select>
+	
+	<select id="getPlatformByName" resultType="com.ssyvsse.pojo.Platform">
+		SELECT * FROM platform where platform = #{name}
+	</select>
+</mapper>
