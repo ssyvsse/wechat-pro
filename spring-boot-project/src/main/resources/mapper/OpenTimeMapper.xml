@@ -20,4 +20,8 @@
 		select no from open_time where period=#{period} and typeid=#{typeid}
 	</select>
 	
+	<select id="checkPeriodIsNullOrNot" resultType="java.lang.String">
+  		select distinct period from open_time where typeid=#{typeid}
+    </select> 
+	
 </mapper>

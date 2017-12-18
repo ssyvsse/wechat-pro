@@ -13,4 +13,6 @@ public interface CptypeMapper {
 	
 	Cptype selectById(@Param("id")int id);
 	
+	Cptype selectByPrimaryKey(Integer id);
+	
 }

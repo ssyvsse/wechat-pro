@@ -18,4 +18,6 @@ public interface OpenTimeMapper {
 	void addPeriod(OpenTime openTime);
 	
 	int getNewNoByPeriodAndTypeId(@Param("period")String period,@Param("typeid")int typeid);
+	
+	List<String> checkPeriodIsNullOrNot(int typeid);
 }

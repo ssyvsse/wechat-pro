@@ -11,4 +11,32 @@
 		select id,typename from cptype where id=#{id}
 	</select>
 	
+	<resultMap id="BaseResultMap" type="com.ssyvsse.pojo.Cptype" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="typename" property="typename" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="openday" property="openday" jdbcType="VARCHAR" />
+    <result column="showtype" property="showtype" jdbcType="CHAR" />
+    <result column="ishot" property="ishot" jdbcType="CHAR" />
+    <result column="shortpy" property="shortpy" jdbcType="VARCHAR" />
+    <result column="opendetail" property="opendetail" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="highFrequency" property="highFrequency" jdbcType="CHAR"/>
+  	</resultMap>
+	
+	<sql id="Base_Column_List" >
+    id, typename,name, parentid, sort, openday, showtype, ishot, shortpy, opendetail, status, 
+     comment,typepicture,highFrequency,isfrequecy,locationid,high,low,seotitle,seokeywords,seodescribe
+  	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cptype
+    where id = #{id,jdbcType=INTEGER}
+ 	</select>
+  
+  	
 </mapper>
