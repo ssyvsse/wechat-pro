@@ -16,8 +16,8 @@ import javax.persistence.Table;
  *
  * @Date 2017年12月10日 下午8:06:05
  */
-@Entity
-@Table(name = "wxuserinfo")
+//@Entity
+//@Table(name = "wxuserinfo")
 public class WXUserInfo implements Serializable {
 
 	/**

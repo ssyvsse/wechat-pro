@@ -23,7 +23,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 //(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
 @ServletComponentScan
 @MapperScan({ "com.ssyvsse.dao", "com.ssyvsse.base.dao", "com.ssyvsse.wechat.dao" })
-@PropertySource("classpath:mybatis_home.properties")
+@PropertySource("classpath:mybatis_test.properties")
 @Configuration
 public class Application {
 

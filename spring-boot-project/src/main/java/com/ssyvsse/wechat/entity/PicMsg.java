@@ -16,8 +16,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @Date 2017年12月10日 下午3:57:46
  */
-@Entity
-@Table(name = "uploadImg")
+//@Entity
+//@Table(name = "uploadImg")
 public class PicMsg implements Serializable {
 
 	/**

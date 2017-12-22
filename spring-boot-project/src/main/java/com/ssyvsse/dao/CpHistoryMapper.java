@@ -17,4 +17,7 @@ public interface CpHistoryMapper {
 	
 	
 	List<CpHistory> selectByDate(@Param("date")String date,@Param("typeid")int typeid);
+	
+	
+	List<CpHistory> selectHistoryByIdOrderByNoDesc(@Param("typeid")int typeid,@Param("date")int date);
 }

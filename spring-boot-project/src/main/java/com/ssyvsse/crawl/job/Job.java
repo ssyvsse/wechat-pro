@@ -31,8 +31,8 @@ import com.ssyvsse.utils.DateUtils;
  *
  * @Date 2017年12月14日 下午7:40:34
  */
-@Component
-@EnableScheduling
+//@Component
+//@EnableScheduling
 public class Job {
 
 	private Logger log = Logger.getLogger(Job.class);
@@ -58,8 +58,8 @@ public class Job {
 	/**
 	 * 每天凌晨 00:04 触发 除了新疆时时彩
 	 */
-	//@Scheduled(cron = "0 4 0 * * ?")
-	@Scheduled(fixedRate=1000*6000)
+	@Scheduled(cron = "0 4 0 * * ?")
+	//@Scheduled(fixedRate=1000*6000)
 	public void test() {
 		log.error("=====================================>>>>>>每天凌晨 00:05 触发 除了新疆时时彩");
 		List<Cp_platform> cp_platforms = platformMapper.getCpByPlatform("2349m");
@@ -178,7 +178,7 @@ public class Job {
 		
 	}
 
-	@Scheduled(fixedRate = 1000 * 5 * 60)
+	//@Scheduled(fixedRate = 1000 * 5 * 60)
 	public void test3() {
 		if ("mybatis_home".equals(status)) {
 			Map<String, String> map = new HashMap<String, String>();
@@ -204,7 +204,7 @@ public class Job {
 			}
 			if (msg != null && !"".equals(msg)) {
 				log.error(msg);
-				CPSMS.send3("13959237924", msg); 
+				//CPSMS.send3("13959237924", msg); 
 			}
 		}
 	}

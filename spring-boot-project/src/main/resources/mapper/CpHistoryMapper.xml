@@ -10,4 +10,13 @@
 		select no,createtime from cp_history where typeid=#{typeid} and DATE_FORMAT(createtime,"%y-%M-%d")=DATE_FORMAT(#{date},"%y-%M-%d") order by no asc
 	</select>
 	
+	<resultMap type="com.ssyvsse.pojo.CpHistory" id="checkResult">
+		<result column="no" property="no"/>
+		<result column="createtime" property="createtime"/>
+	</resultMap>
+	
+	<select id="selectHistoryByIdOrderByNoDesc" resultMap="checkResult">
+		select no,createtime from cp_history where typeid=#{typeid} and no like concat(#{date},'%') order by no desc
+	</select>
+	
 </mapper>
