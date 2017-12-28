@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.mobile.device.Device;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  * @Date 2017年12月28日 下午9:30:30 
  */
+@Controller
 public class MainsiteErrorController implements ErrorController {
 
 	private static final String ERROR_PATH = "/error";

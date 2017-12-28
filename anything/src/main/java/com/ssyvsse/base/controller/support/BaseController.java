@@ -1,4 +1,4 @@
-package com.ssyvsse.base.controller;
+package com.ssyvsse.base.controller.support;
 
 import java.io.IOException;
 
