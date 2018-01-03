@@ -26,4 +26,8 @@ public class AdminIndexController extends BaseController{
 	public String login(){
 		return "admin/login";
 	}
+	@RequestMapping("/register.html")
+	public String register(){
+		return "admin/register";
+	}
 }
