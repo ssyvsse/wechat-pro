@@ -1,4 +1,4 @@
-package com.ssyvsse.base.dao;
+package com.ssyvsse.base.dao.support;
 
 import java.io.Serializable;
 

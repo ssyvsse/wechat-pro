@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ssyvsse.base.entity.support.BaseEntity;
 
@@ -35,9 +37,10 @@ public class User extends BaseEntity {
 	 * 用户id
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(generator="uuid")
+	@GenericGenerator(name="uuid",strategy="uuid")
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private String id;
 
 	/**
 	 * 账户名
@@ -49,8 +52,6 @@ public class User extends BaseEntity {
 	 * 昵称
 	 */
 	private String nickName;
-
-	
 
 	@Override
 	public String toString() {
@@ -304,11 +305,11 @@ public class User extends BaseEntity {
 		this.code = code;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
