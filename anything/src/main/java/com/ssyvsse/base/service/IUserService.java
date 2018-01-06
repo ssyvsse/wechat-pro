@@ -17,5 +17,7 @@ public interface IUserService extends IBaseService<User, String> {
 	public JsonResult regist(User user,HttpServletRequest request);
 	
 	public IUserDao getUserDao();
+	
+	public User findByUserNameAndPassword(String userName,String password);
 
 }

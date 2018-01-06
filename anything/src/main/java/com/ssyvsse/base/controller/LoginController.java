@@ -31,6 +31,7 @@ public class LoginController {
 	}
 	
 	@PostMapping("/regist")
+	@ResponseBody
 	public JsonResult register(User user,HttpServletRequest request) {
 		return userService.regist(user, request);
 	}

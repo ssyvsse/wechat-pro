@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public JsonResult regist(User user, HttpServletRequest request) {
 		User entity = getUserDao().findByuserName(user.getUserName());
-		if(entity!=null) {
+		if(entity==null) {
 			try {
 				user.setLoginType(user.getLoginType());
 				user.setCreateTime(new Date());
@@ -48,6 +48,13 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 
+	@Override
+	public User findByUserNameAndPassword(String userName, String password) {
+		
+		return null;
+	}
+
+	
 	@Override
 	public User find(String id) {
 		return getUserDao().findById(id);
@@ -155,4 +162,5 @@ public class UserServiceImpl implements IUserService {
 		return this.userDao;
 	}
 
+	
 }
