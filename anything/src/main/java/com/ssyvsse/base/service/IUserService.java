@@ -1,6 +1,7 @@
 package com.ssyvsse.base.service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.ssyvsse.base.common.JsonResult;
 import com.ssyvsse.base.dao.support.IUserDao;
@@ -18,6 +19,6 @@ public interface IUserService extends IBaseService<User, String> {
 	
 	public IUserDao getUserDao();
 	
-	public User findByUserNameAndPassword(String userName,String password);
+	public JsonResult findByUserNameAndPassword(String userName,String password,HttpSession session);
 
 }

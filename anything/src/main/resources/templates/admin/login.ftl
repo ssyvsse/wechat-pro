@@ -9,9 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/css/demo.css" />
 <!--必要样式-->
 <link rel="stylesheet" type="text/css" href="/css/component.css" />
-<!--[if IE]>
-<script src="js/html5.js"></script>
-<![endif]-->
+<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 		<div class="container demo-1">
@@ -27,9 +25,9 @@
 							</div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
-								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+								<input id="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
 							</div>
-							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF" onclick="login();">登录</a></div>
 						</form>
 					</div>
 				</div>
@@ -39,7 +37,30 @@
 		<script src="/js/EasePack.min.js"></script>
 		<script src="/js/rAF.js"></script>
 		<script src="/js/demo-1.js"></script>
+		<script src="/js/md5.js"></script>
 		<div style="text-align:center;">
 		</div>
+		<script>
+			function login(){
+				var username = $("input[name='logname']");
+				var password = $("#logpass").val();
+				$.ajax({
+					url:'/login',
+					type:'post',
+					data:{
+						userName:username[0].value,
+						password:md5(password)
+					},
+					dataType:'json',
+					success:function(data){
+						if(data.code==0){
+							location.href="/admin/index.html";
+						}else{
+							alert(data.message);
+						}
+					},
+				});
+			}
+		</script>
 	</body>
 </html>

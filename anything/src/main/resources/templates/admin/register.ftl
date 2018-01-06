@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<title>login</title>
+<title>注册</title>
 <link rel="stylesheet" type="text/css" href="/css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="/css/demo.css" />
 <!--必要样式-->
@@ -40,14 +40,15 @@
 		<script src="/js/EasePack.min.js"></script>
 		<script src="/js/rAF.js"></script>
 		<script src="/js/demo-1.js"></script>
+		<script src="/js/md5.js"></script>
 		<script>
 		function register(){
 			var username = $("#username").val();
 			var password = $("#password").val();
 			$.post("/regist",
 			{
-				username:username,
-				password:password,
+				userName:username,
+				password:md5(password),
 				loginType:'background',
 			},function(data){
 				if(data.code==0){

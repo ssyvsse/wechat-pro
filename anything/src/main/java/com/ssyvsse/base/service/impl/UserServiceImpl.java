@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.ssyvsse.base.common.JsonResult;
 import com.ssyvsse.base.dao.support.IUserDao;
 import com.ssyvsse.base.entity.User;
 import com.ssyvsse.base.service.IUserService;
+import com.ssyvsse.util.CryptUtils;
 import com.ssyvsse.util.MD5Utils;
 
 /**
@@ -36,7 +38,7 @@ public class UserServiceImpl implements IUserService {
 				user.setLoginType(user.getLoginType());
 				user.setCreateTime(new Date());
 				user.setDeleteStatus(0);
-				user.setPassword(MD5Utils.md5(user.getPassword()));
+				user.setPassword(user.getPassword());
 				getUserDao().save(user);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -48,10 +50,27 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 
+	public static void main(String[] args) {
+		try {
+			System.out.println(CryptUtils.GetMD5Code("123456789"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		};
+	}
+	
 	@Override
-	public User findByUserNameAndPassword(String userName, String password) {
-		
-		return null;
+	public JsonResult findByUserNameAndPassword(String userName, String password,HttpSession session) {
+		User user = userDao.findByuserName(userName);
+		if(user!=null) {
+			if(password.equals(user.getPassword())) {
+				session.setAttribute("customer", user);
+				return JsonResult.success();
+			}else {
+				return JsonResult.failure("用户名或密码错误.");
+			}
+		}else {
+			return JsonResult.failure("用户不存在");
+		}
 	}
 
 	
