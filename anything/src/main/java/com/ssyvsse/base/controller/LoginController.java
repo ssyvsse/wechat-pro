@@ -28,7 +28,7 @@ public class LoginController {
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	@ResponseBody
 	public JsonResult login(User user,HttpSession session) {
-		return userService.findByUserNameAndPassword(user.getUserName(), user.getPassword(), session);
+		return userService.findByUserNameAndPassword(user, session);
 	}
 	
 	@PostMapping("/regist")

@@ -41,6 +41,13 @@
 		<div style="text-align:center;">
 		</div>
 		<script>
+			$(function(){
+				$("#logpass").keydown(function(event){
+					if(event.keyCode==13){
+						login();
+					}
+				});
+			})
 			function login(){
 				var username = $("input[name='logname']");
 				var password = $("#logpass").val();
@@ -49,7 +56,8 @@
 					type:'post',
 					data:{
 						userName:username[0].value,
-						password:md5(password)
+						password:md5(password),
+						loginType:'background'
 					},
 					dataType:'json',
 					success:function(data){

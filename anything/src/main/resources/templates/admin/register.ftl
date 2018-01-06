@@ -53,6 +53,7 @@
 			},function(data){
 				if(data.code==0){
 					alert("注册成功");
+					location.href="/admin/login.html";
 				}else{
 					alert(data.message);
 				}

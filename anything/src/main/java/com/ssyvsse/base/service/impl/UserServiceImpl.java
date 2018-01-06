@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService {
 				user.setLoginType(user.getLoginType());
 				user.setCreateTime(new Date());
 				user.setDeleteStatus(0);
-				user.setPassword(user.getPassword());
+				user.setPassword(CryptUtils.GetMD5Code(user.getPassword()));
 				getUserDao().save(user);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -59,14 +59,18 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
-	public JsonResult findByUserNameAndPassword(String userName, String password,HttpSession session) {
-		User user = userDao.findByuserName(userName);
-		if(user!=null) {
-			if(password.equals(user.getPassword())) {
-				session.setAttribute("customer", user);
-				return JsonResult.success();
+	public JsonResult findByUserNameAndPassword(User user,HttpSession session) {
+		User entity = userDao.findByuserName(user.getUserName());
+		if(entity!=null) {
+			if("background".equals(user.getLoginType())) {
+				if(entity.getPassword().equals(user.getPassword())) {
+					session.setAttribute("user", user);
+					return JsonResult.success();
+				}else {
+					return JsonResult.failure("用户名或密码错误!");
+				}
 			}else {
-				return JsonResult.failure("用户名或密码错误.");
+				return JsonResult.success();
 			}
 		}else {
 			return JsonResult.failure("用户不存在");
