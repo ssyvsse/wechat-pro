@@ -32,7 +32,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public JsonResult regist(User user, HttpServletRequest request) {
-		User entity = getUserDao().findByuserName(user.getUserName());
+		User entity = getUserDao().findByUserName(user.getUserName());
 		if(entity==null) {
 			try {
 				user.setLoginType(user.getLoginType());
@@ -60,7 +60,7 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public JsonResult findByUserNameAndPassword(User user,HttpSession session) {
-		User entity = userDao.findByuserName(user.getUserName());
+		User entity = userDao.findByUserName(user.getUserName());
 		if(entity!=null) {
 			if("background".equals(user.getLoginType())) {
 				if(entity.getPassword().equals(user.getPassword())) {

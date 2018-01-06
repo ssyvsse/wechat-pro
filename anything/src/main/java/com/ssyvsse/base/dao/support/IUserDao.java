@@ -15,7 +15,7 @@ public interface IUserDao extends IBaseDao<User,Integer>{
 	
 	void deleteById(String id);
 	
-	User findByuserName(String userName);
+	User findByUserName(String userName);
 	
 	List<User> findByTelephone(String telephone);
 }
