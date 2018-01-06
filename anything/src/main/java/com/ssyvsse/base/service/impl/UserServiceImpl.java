@@ -8,10 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssyvsse.base.common.JsonResult;
+import com.ssyvsse.base.config.DefaultUsernamepasswordToken;
 import com.ssyvsse.base.dao.support.IUserDao;
 import com.ssyvsse.base.entity.User;
 import com.ssyvsse.base.service.IUserService;
@@ -39,6 +43,7 @@ public class UserServiceImpl implements IUserService {
 				user.setCreateTime(new Date());
 				user.setDeleteStatus(0);
 				user.setPassword(CryptUtils.GetMD5Code(user.getPassword()));
+				user.setLocked(0);
 				getUserDao().save(user);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -59,15 +64,18 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
-	public JsonResult findByUserNameAndPassword(User user,HttpSession session) {
+	public JsonResult backLogin(User user,HttpSession session) {
 		User entity = userDao.findByUserName(user.getUserName());
 		if(entity!=null) {
 			if("background".equals(user.getLoginType())) {
-				if(entity.getPassword().equals(user.getPassword())) {
-					session.setAttribute("user", user);
+				try {
+					Subject subject = SecurityUtils.getSubject();
+					DefaultUsernamepasswordToken token = new DefaultUsernamepasswordToken(user.getUserName(), user.getPassword(),user.getLoginType());
+					subject.login(token);
 					return JsonResult.success();
-				}else {
-					return JsonResult.failure("用户名或密码错误!");
+				} catch (AuthenticationException e) {
+					e.printStackTrace();
+					return JsonResult.failure(e.getMessage());
 				}
 			}else {
 				return JsonResult.success();

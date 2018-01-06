@@ -6,6 +6,10 @@ import java.util.Set;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ssyvsse.base.entity.Resource;
+import com.ssyvsse.base.entity.Role;
 import com.ssyvsse.base.entity.User;
 import com.ssyvsse.base.service.IUserService;
 
@@ -28,15 +34,13 @@ import com.ssyvsse.base.service.IUserService;
 @Component
 public class BackgroundRealm extends AuthorizingRealm {
 
-	private Logger logger = LoggerFactory.getLogger(BackgroundRealm.class);
-	
 	@Autowired
 	private IUserService userService;
 	
 	public BackgroundRealm() {
 		super(new AllowAllCredentialsMatcher());
 		setAuthenticationTokenClass(UsernamePasswordToken.class);
-		// FIXME: 暂时禁用Cache
+		// 暂时禁用Cache
 		setCachingEnabled(false);
 		/*
 		 * //启用身份验证缓存，即缓存AuthenticationInfo信息，默认false；
@@ -52,18 +56,56 @@ public class BackgroundRealm extends AuthorizingRealm {
 	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		logger.info("backgroundRealm~~~~查询权限当中");
-		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Set<String> per = new HashSet<>();
-		authorizationInfo.setStringPermissions(per);
-		return authorizationInfo;
+		
+		if(principals.getPrimaryPrincipal() instanceof User) {
+			User user = (User)principals.getPrimaryPrincipal();
+			SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+			User dbUser = userService.getUserDao().findByUserName(user.getUserName());
+			Set<String> shiroPermissions = new HashSet<String>();
+			Set<String> roleSet = new HashSet<String>();
+			Set<Role> roles = dbUser.getRoles();
+			for (Role role : roles) {
+				Set<Resource> resources = role.getResources();
+				for (Resource resource : resources) {
+					shiroPermissions.add(resource.getSourceKey());
+				}
+				roleSet.add(role.getRoleKey());
+			}
+			authorizationInfo.setRoles(roleSet);
+			authorizationInfo.setStringPermissions(shiroPermissions);
+			return authorizationInfo;
+		}else {
+			return null;
+		}
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		
 		String username = (String) token.getPrincipal();
 		User user = userService.getUserDao().findByUserName(username);
-		return null;
+		String password = new String((char[])token.getCredentials());
+		
+		if(user==null) {
+			throw new UnknownAccountException("帐号不正确");
+		}
+		
+		if(!"background".equals(user.getLoginType())) {
+			throw new UnknownAccountException("帐号不正确");
+		}
+		
+		if(user.getLocked()==1) {
+			throw new LockedAccountException("帐号已被锁定,请联系管理员");
+		}
+		
+		if(!password.equals(user.getPassword())) {
+			throw new IncorrectCredentialsException("密码不正确");
+		}
+		
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,
+				password, getName());
+		
+		return info;
 	}
 	
 	@Override

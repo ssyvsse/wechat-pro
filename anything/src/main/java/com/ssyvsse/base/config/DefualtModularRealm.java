@@ -11,6 +11,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.util.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author llb
@@ -21,6 +22,9 @@ public class DefualtModularRealm extends ModularRealmAuthenticator {
 
 	private Map<String, Object> definedRealms;
 
+	@Autowired
+	private BackgroundRealm backgroundRealm;
+	
 	@Override
 	protected AuthenticationInfo doMultiRealmAuthentication(Collection<Realm> realms, AuthenticationToken token) {
 		return super.doMultiRealmAuthentication(realms, token);
@@ -38,7 +42,6 @@ public class DefualtModularRealm extends ModularRealmAuthenticator {
 		AuthenticationInfo info = null;
 		try {
 			info = realm.getAuthenticationInfo(token);
-
 			if (info == null) {
 				throw new ShiroException("token不存在!");
 			}
@@ -59,13 +62,13 @@ public class DefualtModularRealm extends ModularRealmAuthenticator {
 		DefaultUsernamepasswordToken token = (DefaultUsernamepasswordToken) authenticationToken;
 		// 登录类型
 		String loginType = token.getLoginType();
-		System.out.println("loginType ~~" + loginType);
 		// 所有Realm
 		Collection<Realm> realms = new ArrayList<>();
-
+		realms.add(backgroundRealm); 
 		Realm realm = null;
-
-
+		if("background".equals(loginType)) {
+			realm = backgroundRealm;
+		}
 		return this.doSingleRealmAuthentication(realm, authenticationToken);
 	}
 

@@ -2,6 +2,7 @@ package com.ssyvsse.base.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -22,7 +23,7 @@ public class AdminIndexController extends BaseController{
 	}
 	@RequestMapping("/welcome.html")
 	public String welcom(){
-		return "welcome";
+		return "admin/welcome";
 	}
 	@RequestMapping("/login.html")
 	public String login(){
@@ -31,5 +32,10 @@ public class AdminIndexController extends BaseController{
 	@RequestMapping("/register.html")
 	public String register(){
 		return "admin/register";
+	}
+	
+	@GetMapping("/admin-list.html")
+	public String adminList() {
+		return "/admin/admin-list";
 	}
 }

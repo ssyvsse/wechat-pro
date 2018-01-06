@@ -33,8 +33,8 @@ public class ShiroConfig {
 	@DependsOn("lifecycleBeanPostProcessor")
 	@ConditionalOnMissingBean
 	public List<Realm> realm() {
-
 		List<Realm> list = new ArrayList<>();
+		list.add(new BackgroundRealm());
 		return list;
 	}
 
@@ -76,11 +76,9 @@ public class ShiroConfig {
 		shiroFilter.setSecurityManager(securityManager);
 		shiroFilter.setLoginUrl("/admin/login.html");
 		shiroFilter.setSuccessUrl("/admin/index.html");
-		
 		shiroFilter.setUnauthorizedUrl("/previlige/no");
 		Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
 		filterChainDefinitionMap.put("/assets/**", "anon");
-		
 		filterChainDefinitionMap.put("/admin/login.html", "anon");
 		filterChainDefinitionMap.put("/admin/index.html", "authc");
 		filterChainDefinitionMap.put("/admin/**", "authc");
@@ -98,7 +96,6 @@ public class ShiroConfig {
 		map.put("customerFilter", adminAuthc);
 		
 		shiroFilter.setFilters(map);
-
 		
 		shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMap);
 		return shiroFilter;
