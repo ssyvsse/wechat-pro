@@ -40,7 +40,6 @@
 		<script src="/js/EasePack.min.js"></script>
 		<script src="/js/rAF.js"></script>
 		<script src="/js/demo-1.js"></script>
-		<script src="/js/md5.js"></script>
 		<script>
 		function register(){
 			var username = $("#username").val();
@@ -48,7 +47,7 @@
 			$.post("/regist",
 			{
 				userName:username,
-				password:md5(password),
+				password:password,
 				loginType:'background',
 			},function(data){
 				if(data.code==0){

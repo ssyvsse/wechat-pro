@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssyvsse.base.dao.LogMapper" >
+   
+   <resultMap id="logMap" type="com.ssyvsse.base.entity.Log">
+   		<id property="id" column="id"/>
+   		<result property="operationalContext" column="operational_context"/>
+   		<result property="operationTime" column="operation_time"/>
+   		<result property="operator" column="operator"/>
+   		<result property="ip" column="ip"/>
+   </resultMap>
+   
+   <select id="findByOperatorAndOperateTime" resultMap="logMap">
+   		select * from system_log 
+   			<trim prefix="where" suffix="" suffixOverrides="AND">
+   			<if test="searchText != null and searchText != '' ">
+   				where searchText like CONCAT("%",#{searchText},"%") AND 
+   			</if>
+   			<if test="begin != null and begin != '' ">
+   				operation_time &gt;= CONCAT(#{begin}," 00:00:00") and 
+   			</if>
+   			<if test="end != null and end != '' ">
+   				operation_time &lt;= CONCAT(#{end}," 23:59:59") 
+   			</if>
+   			</trim>
+			order by id desc   			
+   </select>
+</mapper>

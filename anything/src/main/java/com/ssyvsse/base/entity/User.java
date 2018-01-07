@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -23,9 +22,10 @@ import com.ssyvsse.base.entity.support.BaseEntity;
  * <p>
  * 用户账户表
  * </p>
+ * 
+ * @author llb
  *
- * @author SPPan
- * @since 2016-12-28
+ * @Date 2018年1月7日 上午11:51:35
  */
 @Entity
 @Table(name = "tb_user")
@@ -37,15 +37,15 @@ public class User extends BaseEntity {
 	 * 用户id
 	 */
 	@Id
-	@GeneratedValue(generator="uuid")
-	@GenericGenerator(name="uuid",strategy="uuid")
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
 	@Column(name = "id", nullable = false)
 	private String id;
 
 	/**
 	 * 账户名
 	 */
-	
+
 	private String userName;
 
 	/**
@@ -128,33 +128,33 @@ public class User extends BaseEntity {
 	private Date updateTime;
 
 	@ManyToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "role_id") })
+	@JoinTable(name = "tb_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
 	private java.util.Set<Role> roles;
-	
 
-	//验证码
+	// 验证码
 	private String code;
 	private String old;
 	private String loginType;
 	private String sessionid;
 	private Integer age;
-//	private String cookie;
+	// private String cookie;
 	private String user_ip;
 	@JSONField(format = "yyyy-MM-dd")
 	private Date last_login_time;
 	private String head_portrait;
-	
+
 	private String token;
 	private Integer score;
-	
+
 	private String city;
 	private Integer num;
-	
+
 	private Integer wechatId;
 	private Integer qid;
-	private Integer sound=-1;
+	private Integer sound = -1;
 	private String province;
-	private Integer alias=2;//PC端注册默认为2，APP注册默认为1
+	private Integer alias = 2;// PC端注册默认为2，APP注册默认为1
 
 	public String getRegisterType() {
 		return registerType;
@@ -170,10 +170,10 @@ public class User extends BaseEntity {
 	private String registerType;
 
 	/**
-	 * 注册页的链接 
+	 * 注册页的链接
 	 */
 	private String registUrl;
-	
+
 	public String getRegistUrl() {
 		return registUrl;
 	}
@@ -254,8 +254,6 @@ public class User extends BaseEntity {
 		this.score = score;
 	}
 
-	
-
 	public String getUser_ip() {
 		return user_ip;
 	}
@@ -279,7 +277,6 @@ public class User extends BaseEntity {
 	public void setHead_portrait(String head_portrait) {
 		this.head_portrait = head_portrait;
 	}
-
 
 	public Integer getAge() {
 		return age;
@@ -424,7 +421,7 @@ public class User extends BaseEntity {
 	public void setRoles(java.util.Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	public Integer getWechatId() {
 		return wechatId;
 	}
@@ -440,5 +437,5 @@ public class User extends BaseEntity {
 	public void setQid(Integer qid) {
 		this.qid = qid;
 	}
-	
+
 }

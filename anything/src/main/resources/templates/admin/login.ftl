@@ -37,7 +37,6 @@
 		<script src="/js/EasePack.min.js"></script>
 		<script src="/js/rAF.js"></script>
 		<script src="/js/demo-1.js"></script>
-		<script src="/js/md5.js"></script>
 		<div style="text-align:center;">
 		</div>
 		<script>
@@ -56,7 +55,7 @@
 					type:'post',
 					data:{
 						userName:username[0].value,
-						password:md5(password),
+						password:password,
 						loginType:'background'
 					},
 					dataType:'json',

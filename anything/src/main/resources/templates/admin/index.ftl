@@ -36,12 +36,12 @@
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#"> <span
 								class="clear"> <span class="block m-t-xs"
 									style="font-size: 20px;"> <i class="fa fa-area-chart"></i>
-										<strong class="font-bold">彩票</strong>
+										<strong class="font-bold">后台</strong>
 								</span>
 							</span>
 							</a>
 						</div>
-						<div class="logo-element">彩票</div>
+						<div class="logo-element">后台~~~</div>
 					</li>
 					<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
 						<span class="ng-scope">分类</span>
@@ -59,7 +59,7 @@
 							<li><a class="J_menuItem" href="/admin/log/index">日志管理</a></li>
 							<li><a class="J_menuItem" href="/admin/version">版本号管理</a></li>
 						</ul></li>
-					<li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
+					<!-- <li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
 							<span class="nav-label">运营配置</span> <span class="fa arrow"></span>
 					</a>
 						<ul class="nav nav-second-level">
@@ -78,38 +78,26 @@
 							<li><a class="J_menuItem" href="/admin/sensitivewords/index">敏感词设置</a></li>
 							<li><a class="J_menuItem" href="/admin/SEOManage/index">链接提交</a></li>
 
-						</ul></li>
-
-
-					<li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
-							<span class="nav-label">彩票录入</span> <span class="fa arrow"></span>
-					</a>
-						<ul class="nav nav-second-level">
-							<li><a class="J_menuItem" href="/admin/cpmanager/add">录入彩票</a></li>
-							<li><a class="J_menuItem" href="/admin/cpmanager/check">彩票审核</a></li>
-
-						</ul></li>
-
-
+						</ul></li> -->
+					<@shiro.hasPermission name="system:qxgl:index">
 					<li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
 							<span class="nav-label">权限管理</span> <span class="fa arrow"></span>
 					</a>
 						<ul class="nav nav-second-level">
+							<@shiro.hasPermission name="system:user:index">
 							<li><a class="J_menuItem" href="${ctx!}/admin/user/index">用户管理</a>
 							</li>
-
+							</@shiro.hasPermission>
+							<@shiro.hasPermission name="system:role:index">
 							<li><a class="J_menuItem" href="${ctx!}/admin/role/index">角色管理</a>
 							</li>
+							</@shiro.hasPermission>
 
 							<li><a class="J_menuItem"
 								href="${ctx!}/admin/resource/index">资源管理</a></li>
-
-
-						</ul></li>
-
-
-
-
+						</ul>
+					</li>
+					</@shiro.hasPermission>
 				</ul>
 
 

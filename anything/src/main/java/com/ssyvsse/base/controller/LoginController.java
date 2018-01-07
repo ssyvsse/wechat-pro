@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ssyvsse.base.common.JsonResult;
 import com.ssyvsse.base.entity.User;
 import com.ssyvsse.base.service.IUserService;
+import com.ssyvsse.base.service.LoginService;
 
 /**
  * @author llb
@@ -25,10 +26,13 @@ public class LoginController {
 	@Autowired
 	private IUserService userService;
 	
+	@Autowired
+	private LoginService loginService;
+	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	@ResponseBody
-	public JsonResult login(User user,HttpSession session) {
-		return userService.backLogin(user, session);
+	public JsonResult login(User user,HttpSession session,HttpServletRequest request) {
+		return loginService.backLogin(user, session,request);
 	}
 	
 	@PostMapping("/regist")

@@ -15,13 +15,15 @@ import javax.persistence.Table;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ssyvsse.base.entity.support.BaseEntity;
 
+
 /**
  * <p>
  * 资源表
  * </p>
+ * 
+ * @author llb
  *
- * @author SPPan
- * @since 2016-12-28
+ * @Date 2018年1月7日 上午11:50:47
  */
 @Entity
 @Table(name = "tb_resource")

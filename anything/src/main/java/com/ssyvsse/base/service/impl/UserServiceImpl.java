@@ -2,23 +2,28 @@ package com.ssyvsse.base.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.ssyvsse.base.common.JsonResult;
-import com.ssyvsse.base.config.DefaultUsernamepasswordToken;
-import com.ssyvsse.base.dao.support.IUserDao;
+import com.ssyvsse.base.dao.IUserDao;
+import com.ssyvsse.base.dao.support.IBaseDao;
+import com.ssyvsse.base.entity.Role;
 import com.ssyvsse.base.entity.User;
+import com.ssyvsse.base.service.IRoleService;
 import com.ssyvsse.base.service.IUserService;
+import com.ssyvsse.base.service.support.impl.BaseServiceImpl;
 import com.ssyvsse.util.CryptUtils;
 import com.ssyvsse.util.MD5Utils;
 
@@ -29,163 +34,116 @@ import com.ssyvsse.util.MD5Utils;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl extends BaseServiceImpl<User, String> implements IUserService {
+
+	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 	@Autowired
 	private IUserDao userDao;
 
+	@Autowired
+	private IRoleService roleService;
+
+	@Override
+	public User find(String id) {
+		return userDao.findById(id);
+	}
+
+	@Override
+	public IBaseDao<User, String> getBaseDao() {
+		return this.userDao;
+	}
+
+	@Override
+	public User findByNiceName(String nickName) {
+		return userDao.findByNickName(nickName);
+	}
+
+	@Override
+	public User findByUserName(String userName) {
+		return userDao.findByUserName(userName);
+	}
+
 	@Override
 	public JsonResult regist(User user, HttpServletRequest request) {
-		User entity = getUserDao().findByUserName(user.getUserName());
-		if(entity==null) {
+		User entity = userDao.findByUserName(user.getUserName());
+		if (entity == null) {
 			try {
 				user.setLoginType(user.getLoginType());
 				user.setCreateTime(new Date());
 				user.setDeleteStatus(0);
-				user.setPassword(CryptUtils.GetMD5Code(user.getPassword()));
+				user.setPassword(MD5Utils.md5(user.getPassword()));
 				user.setLocked(0);
-				getUserDao().save(user);
+				user.setUpdateTime(new Date());
+				getBaseDao().save(user);
+				logger.info("注册成功");
 			} catch (Exception e) {
 				e.printStackTrace();
+				logger.info("注册失败");
 				return JsonResult.failure("注册失败");
 			}
 			return JsonResult.success();
-		}else {
+		} else {
 			return JsonResult.failure("用户名已存在");
 		}
 	}
 
-	public static void main(String[] args) {
-		try {
-			System.out.println(CryptUtils.GetMD5Code("123456789"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		};
-	}
-	
-	@Override
-	public JsonResult backLogin(User user,HttpSession session) {
-		User entity = userDao.findByUserName(user.getUserName());
-		if(entity!=null) {
-			if("background".equals(user.getLoginType())) {
-				try {
-					Subject subject = SecurityUtils.getSubject();
-					DefaultUsernamepasswordToken token = new DefaultUsernamepasswordToken(user.getUserName(), user.getPassword(),user.getLoginType());
-					subject.login(token);
-					return JsonResult.success();
-				} catch (AuthenticationException e) {
-					e.printStackTrace();
-					return JsonResult.failure(e.getMessage());
-				}
-			}else {
-				return JsonResult.success();
-			}
-		}else {
-			return JsonResult.failure("用户不存在");
-		}
-	}
-
-	
-	@Override
-	public User find(String id) {
-		return getUserDao().findById(id);
-	}
-
-	@Override
-	public List<User> findAll() {
-		return getUserDao().findAll();
-	}
-
-	@Override
-	public List<User> findList(String[] ids) {
-		List<User> userList = new ArrayList<User>();
-		for (int i = 0, len = ids.length; i < len; i++) {
-			User user = find(ids[i]);
-			if (user != null) {
-				userList.add(user);
-			}
-		}
-		return userList;
-	}
-
-	@Override
-	public List<User> findList(Iterable<String> ids) {
-		List<User> userList = new ArrayList<User>();
-		for (String string : ids) {
-			User user = find(string);
-			if (user != null) {
-				userList.add(user);
-			}
-		}
-		return userList;
-	}
-
-	@Override
-	public long count() {
-		return findAll().size();
-	}
-
-	@Override
-	public boolean exists(String id) {
-		return getUserDao().findById(id) != null;
-	}
-
-	@Override
-	public void save(User entity) {
-		if (entity.getId() != null) {
-
-			getUserDao().saveAndFlush(entity);
-		} else {
-			entity.setCreateTime(new Date());
-			entity.setUpdateTime(new Date());
-			entity.setDeleteStatus(0);
-			entity.setLoginType(entity.getLoginType());
-			if (entity.getPassword() != null) {
-				entity.setPassword(MD5Utils.md5(entity.getPassword()));
-			} else {
-				entity.setPassword(MD5Utils.md5("111111"));
-			}
-			getUserDao().save(entity);
-		}
-	}
-
-	@Override
-	public User update(User entity) {
-		if (entity.getId() != null) {
-			return getUserDao().saveAndFlush(entity);
-		}
-		return null;
-	}
-
 	@Override
 	public void delete(String id) {
-		getUserDao().deleteById(id);
+		User user = find(id);
+		Assert.state(!"admin".equals(user.getUserName()), "超级管理员用户不能删除");
+		super.delete(id);
 	}
 
 	@Override
-	public void deleteByIds(String... ids) {
-		for (int i = 0; i < ids.length; i++) {
-			delete(ids[i]);
+	public void saveOrUpdate(User user, HttpServletRequest request, HttpSession session) {
+		if (user.getId() != null && !"".equals(user.getId())) {
+			User dbUser = find(user.getId());
+			dbUser.setNickName(user.getNickName());
+			if (user.getPassword() != null) {
+				dbUser.setPassword(MD5Utils.md5(user.getPassword()));
+			} else {
+				dbUser.setPassword(dbUser.getPassword());
+			}
+			dbUser.setSex(user.getSex());
+			dbUser.setBirthday(user.getBirthday());
+			dbUser.setTelephone(user.getTelephone());
+			dbUser.setEmail(user.getEmail());
+			dbUser.setAddress(user.getAddress());
+			dbUser.setLocked(user.getLocked());
+			dbUser.setDescription(user.getDescription());
+			dbUser.setUpdateTime(new Date());
+			update(dbUser);
+		} else {
+			user.setCreateTime(new Date());
+			user.setUpdateTime(new Date());
+			user.setDeleteStatus(0);
+			user.setLoginType("background");
+			if (user.getPassword() != null) {
+				user.setPassword(MD5Utils.md5(user.getPassword()));
+			} else {
+				user.setPassword(MD5Utils.md5("111111"));
+			}
+			save(user);
 		}
 	}
 
 	@Override
-	public void delete(User[] entitys) {
-		for (User user : entitys) {
-			delete(user);
+	public void grant(String id, String[] roleIds, HttpServletRequest request) {
+		User user = find(id);
+		Assert.notNull(user, "用户不存在");
+		Assert.state(!"admin".equals(user.getUserName()), "超级管理员用户不能管理角色");
+		Role role;
+		Set<Role> roles = new HashSet<Role>();
+		if (roleIds != null) {
+			for (int i = 0; i < roleIds.length; i++) {
+				Integer rid = Integer.parseInt(roleIds[i]);
+				role = roleService.find(rid);
+				roles.add(role);
+			}
 		}
-	}
-
-	@Override
-	public void delete(Iterable<User> entitys) {
-		for (User user : entitys) {
-			delete(user);
-		}
-	}
-
-	@Override
-	public void delete(User entity) {
-		getUserDao().delete(entity);
+		user.setRoles(roles);
+		update(user);
 	}
 
 	@Override
@@ -193,5 +151,4 @@ public class UserServiceImpl implements IUserService {
 		return this.userDao;
 	}
 
-	
 }

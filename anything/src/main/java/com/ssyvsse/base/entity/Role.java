@@ -21,9 +21,10 @@ import com.ssyvsse.base.entity.support.BaseEntity;
  * <p>
  * 角色表
  * </p>
+ * 
+ * @author llb
  *
- * @author SPPan
- * @since 2016-12-28
+ * @Date 2018年1月7日 上午11:51:23
  */
 @Entity
 @Table(name = "tb_role")
@@ -75,7 +76,8 @@ public class Role extends BaseEntity {
 	private Date updateTime;
 
 	@ManyToMany(cascade = { CascadeType.REFRESH }, fetch = FetchType.EAGER)
-	@JoinTable(name = "tb_role_resource", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = { @JoinColumn(name = "resource_id") })
+	@JoinTable(name = "tb_role_resource", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "resource_id") })
 	private java.util.Set<Resource> resources;
 
 	public Integer getId() {
