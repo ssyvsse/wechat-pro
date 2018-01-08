@@ -62,7 +62,25 @@ public interface IUserService extends IBaseService<User, String> {
 
 	/**
 	 * 获取UserDao
+	 * 
 	 * @return
 	 */
 	public IUserDao getUserDao();
+
+	/**
+	 * 根据id查询密码
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public User findByPassword(Integer id);
+
+	/**
+	 * 后台修改密码
+	 * 
+	 * @param id
+	 * @param password
+	 * @return
+	 */
+	public int updatePwd(Integer id, String password);
 }

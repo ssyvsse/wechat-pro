@@ -81,6 +81,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/assets/**", "anon");
 		filterChainDefinitionMap.put("/admin/login.html", "anon");
 		filterChainDefinitionMap.put("/admin/index.html", "authc");
+		filterChainDefinitionMap.put("/admin/*", "authc");
 		//filterChainDefinitionMap.put("/admin/**", "authc");
 		/*List<com.cp.base.entity.Resource> list = resourceService.findAll();
 		for (com.cp.base.entity.Resource resource : list) {

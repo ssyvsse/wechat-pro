@@ -53,6 +53,7 @@ public class LoginServiceImpl implements LoginService {
 				if (loginUser != null) {
 					loginUser.setLast_login_time(new Date());
 					String ip = IpUtils.getRemoteHost(request);
+					loginUser.setUser_ip(ip);
 					userDao.save(loginUser);
 				}
 				logger.info("成功登录后台...");

@@ -24,6 +24,7 @@ import com.ssyvsse.base.entity.User;
 import com.ssyvsse.base.service.IRoleService;
 import com.ssyvsse.base.service.IUserService;
 import com.ssyvsse.base.service.LogService;
+import com.ssyvsse.util.MD5Utils;
 
 /**
  * @author llb
@@ -110,5 +111,26 @@ public class UserController extends BaseController{
 		return JsonResult.success();
 	}
 	
+	@GetMapping("/changePwd")
+	public String changePwd(){
+		return "admin/changePwd";
+	}
+	
+	@PostMapping("/changePassWord")
+	@ResponseBody
+	public JsonResult changePwd(Integer id,String password,String password2,HttpSession session){
+		User user = userService.findByPassword(id);
+		if(MD5Utils.md5(password).equals(user.getPassword())){
+			try {
+				userService.updatePwd(id, password2);
+				String action = "修改id="+id+"用户的密码";
+				logService.insert(request, session, action);
+			} catch (Exception e) {
+				return JsonResult.failure(e.getMessage());
+			}
+			return JsonResult.success();
+		}
+		return JsonResult.failure("修改失败");
+	}
 	
 }

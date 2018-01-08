@@ -9,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ssyvsse.base.common.JsonResult;
+import com.ssyvsse.base.controller.BaseController;
 import com.ssyvsse.base.entity.Role;
 import com.ssyvsse.base.service.IRoleService;
+import com.ssyvsse.base.service.LogService;
 
 /**
  * @author llb
@@ -21,8 +25,11 @@ import com.ssyvsse.base.service.IRoleService;
  */
 @Controller
 @RequestMapping("/admin/role")
-public class RoleController {
+public class RoleController extends BaseController{
 
+	@Autowired
+	private LogService logService;
+	
 	@Autowired
 	private IRoleService roleService;
 	
@@ -35,6 +42,11 @@ public class RoleController {
 	@ResponseBody
 	public List<Role> list(){
 		return roleService.findAll();
+	}
+	
+	@GetMapping("/add")
+	public String add(){
+		return "admin/role/form";
 	}
 	
 	@GetMapping("/edit/{id}")
@@ -51,4 +63,17 @@ public class RoleController {
 		return "admin/role/grant";
 	}
 	
+	@PostMapping("/grant/{id}")
+	@ResponseBody
+	public JsonResult grant(@PathVariable Integer id,@RequestParam(required = false)String[] resourceIds,ModelMap map){
+		try {
+			roleService.grant(id, resourceIds);
+			String action = "修改了角色id="+id+" 的角色权限";
+			logService.insert(request, request.getSession(), action);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return JsonResult.failure(e.getMessage());
+		}
+		return JsonResult.success();
+	}
 }

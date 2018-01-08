@@ -151,4 +151,15 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements IU
 		return this.userDao;
 	}
 
+	@Override
+	public User findByPassword(Integer id) {
+		return userDao.findByPassword(id);
+	}
+
+	@Override
+	public int updatePwd(Integer id, String password) {
+		String newPwd = MD5Utils.md5(password);
+		return userDao.updatePwd(newPwd, id);
+	}
+
 }

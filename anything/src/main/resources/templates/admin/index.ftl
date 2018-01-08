@@ -37,6 +37,7 @@
 								class="clear"> <span class="block m-t-xs"
 									style="font-size: 20px;"> <i class="fa fa-area-chart"></i>
 										<strong class="font-bold">后台</strong>
+										
 								</span>
 							</span>
 							</a>
@@ -49,36 +50,25 @@
 					<li><a class="J_menuItem" href="${ctx!}/admin/welcome.html">
 							<i class="fa fa-home"></i> <span class="nav-label">主页</span>
 					</a></li>
+					<@shiro.hasPermission name="admin:xtpz:index">
 					<li><a href="#"> <i class="fa fa fa-cog"></i> <span
 							class="nav-label">系统配置</span> <span class="fa arrow"></span>
 					</a>
 						<ul class="nav nav-second-level">
 
-
+							<@shiro.hasPermission name="system:sys:enum">
 							<li><a class="J_menuItem" href="/admin/enum/enum">枚举值管理</a></li>
+							</@shiro.hasPermission>
+							<@shiro.hasPermission name="system:sys:log">
 							<li><a class="J_menuItem" href="/admin/log/index">日志管理</a></li>
+							</@shiro.hasPermission>
+							<@shiro.hasPermission name="system:admin:version">
 							<li><a class="J_menuItem" href="/admin/version">版本号管理</a></li>
+							</@shiro.hasPermission>
+							<li><a class="J_menuItem" href="/admin/webSocket/chat">聊天</a></li>
 						</ul></li>
-					<!-- <li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
-							<span class="nav-label">运营配置</span> <span class="fa arrow"></span>
-					</a>
-						<ul class="nav nav-second-level">
-
-							<li><a class="J_menuItem"
-								href="/admin/navigation/getNavigation">导航栏管理</a></li>
-
-							<li><a class="J_menuItem"
-								href="${ctx!}/admin/customer/index">客户管理</a></li>
-
-							<li><a class="J_menuItem"
-								href="/admin/homepage_common/index">导航栏列表管理</a></li>
-
-							<li><a class="J_menuItem" href="/admin/homepage_common/tdk">全局TDK设置</a></li>
-
-							<li><a class="J_menuItem" href="/admin/sensitivewords/index">敏感词设置</a></li>
-							<li><a class="J_menuItem" href="/admin/SEOManage/index">链接提交</a></li>
-
-						</ul></li> -->
+					</@shiro.hasPermission>
+					
 					<@shiro.hasPermission name="system:qxgl:index">
 					<li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
 							<span class="nav-label">权限管理</span> <span class="fa arrow"></span>
@@ -109,11 +99,14 @@
 			<div class="row border-bottom">
 				<nav class="navbar navbar-static-top" role="navigation"
 					style="margin-bottom: 0">
+					
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-info "
 							href="#"><i class="fa fa-bars"></i> </a>
 					</div>
+					
 					<ul class="nav navbar-top-links navbar-right">
+					
 						<li class="dropdown"><a class="dropdown-toggle count-info"
 							data-toggle="dropdown" href="#"> <i class="fa fa-user"></i> <span
 								class="label label-primary"></span>
@@ -122,13 +115,13 @@
 								<li><a href="${ctx!}/admin/logout">
 										<div>
 											<i class="fa fa-remove"></i> 注销 <span
-												class="pull-right text-muted small"></span>
+												class="pull-right text-muted small">${user.userName}</span>
 										</div>
 								</a></li>
 								<li><a href="${ctx!}/admin/user/changePwd">
 										<div>
 											<i class="fa fa-remove"></i> 修改密码 <span
-												class="pull-right text-muted small"></span>
+												class="pull-right text-muted small">${user.userName}</span>
 										</div>
 								</a></li>
 							</ul></li>

@@ -2,6 +2,10 @@ package com.ssyvsse.base.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ssyvsse.base.dao.support.IBaseDao;
@@ -24,4 +28,12 @@ public interface IUserDao extends IBaseDao<User,String>{
 	List<User> findByTelephone(String telephone);
 	
 	User findByNickName(String nickName);
+	
+	@Query(value="select * from tb_user where id=?1",nativeQuery = true)
+	User findByPassword(Integer id);
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value="update tb_user u set u.password=?1 where u.id=?2",nativeQuery=true)
+	int updatePwd(String newPwd,Integer id);
 }

@@ -154,9 +154,8 @@
 			        title: "操作",
 			        field: "empty",
                     formatter: function (value, row, index) {
-                    	var operateHtml = '<@shiro.hasPermission name="system:role:edit"><button style="    margin: 10px 0;width:84px;font-size: 14px;" class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
-                 
-                    	operateHtml = operateHtml + '<@shiro.hasPermission name="system:role:grant"><button  style="margin: 10px 0;width:84px;font-size: 14px;" class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;分配资源</button></@shiro.hasPermission>';
+                    	var operateHtml = '<@shiro.hasPermission name="system:role:edit"><button class="btn btn-primary btn-sm" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
+                    	operateHtml = operateHtml + '<@shiro.hasPermission name="system:role:grant"><button class="btn btn-info btn-sm" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;分配资源</button></@shiro.hasPermission>';
                         return operateHtml;
                     }
 			    }]
@@ -168,7 +167,7 @@
         	      type: 2,
         	      title: '角色修改',
         	      shadeClose: true,
-        	      shade: false,
+        	      shade: 0.5,
         	      area: ['893px', '600px'],
         	      content: '${ctx!}/admin/role/edit/' + id,
         	      end: function(index){
@@ -181,7 +180,7 @@
         	      type: 2,
         	      title: '用户添加',
         	      shadeClose: true,
-        	      shade: false,
+        	      shade: 0.5,
         	      area: ['893px', '600px'],
         	      content: '${ctx!}/admin/role/add',
         	      end: function(index){
