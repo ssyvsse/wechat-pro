@@ -1,17 +1,22 @@
 package com.ssyvsse.base.controller.websocket;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.ssyvsse.base.controller.websocket.model.Chat;
+import com.google.gson.Gson;
+import com.ssyvsse.base.controller.websocket.model.ChatMessage;
 
 /**
  * 收发消息处理
@@ -25,31 +30,71 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 
 	private Logger logger = LoggerFactory.getLogger(ChatWebSocketHandler.class);
 	
-	public static Map<Integer,Chat> chatMap;
+	public final static Map<String,WebSocketSession> sessionMap = new HashMap<String,WebSocketSession>();
 	
-	private static Map<String, Integer> ipMap;
+	public final static Map<String,List<ChatMessage>> chatMsgListMap = new HashMap<String,List<ChatMessage>>();
 	
-	static{
-		ipMap = new HashMap<String, Integer>();
-	}
-
 	@Override
-	public void afterConnectionEstablished(WebSocketSession arg0) throws Exception {
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("已经建立连接");
+		Object object = session.getAttributes().get("uid");
+		String uid = null;
+		if(object != null && object instanceof String){
+			uid = (String)object;
+			sessionMap.put(uid, session);
+		}
+		
+		
 	}
 	
 	@Override
-	public void afterConnectionClosed(WebSocketSession arg0, CloseStatus arg1) throws Exception {
-		
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+		logger.info("连接关闭");
+		Object object = session.getAttributes().get("uid");
+		String uid = null;
+		if(object != null && object instanceof String){
+			uid = (String)object;
+			sessionMap.remove(uid);
+		}
 	}
 
 	@Override
-	public void handleMessage(WebSocketSession arg0, WebSocketMessage<?> arg1) throws Exception {
-		
+	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+		logger.info(message.getPayload().toString());
+		Object object = message.getPayload();
+		Gson gson = new Gson();
+		String uid = (String)session.getAttributes().get("uid");
+		if(object.toString().equals("000")){
+			session.sendMessage(new TextMessage("000"));
+		}else if("users".equals(object.toString())){
+			Set<String> userSet = ChatWebSocketHandler.sessionMap.keySet();
+			List<String> userList = new ArrayList<String>();
+			for (String string : userSet) {
+				userList.add(string);
+			}
+			session.sendMessage(new TextMessage(userList.toString()));
+		}else{
+			ChatMessage chatMessage = null;
+			try {
+				chatMessage = gson.fromJson(object.toString(), ChatMessage.class);
+				System.out.println(chatMessage);
+				List<ChatMessage> chatMsgList = chatMsgListMap.get(uid);
+				if(chatMsgList==null){
+					chatMsgList = new ArrayList<ChatMessage>();
+					chatMsgList.add(chatMessage);
+				}else{
+					chatMsgList.add(chatMessage);
+				}
+				chatMsgListMap.put(uid, chatMsgList);
+				session.sendMessage(new TextMessage(gson.toJson(chatMsgListMap)));
+			} catch (Exception e) {
+				session.sendMessage(new TextMessage("类型转换错误"));
+			}
+		}
 	}
 
 	@Override
-	public void handleTransportError(WebSocketSession arg0, Throwable arg1) throws Exception {
+	public void handleTransportError(WebSocketSession session, Throwable throwable) throws Exception {
 		
 	}
 

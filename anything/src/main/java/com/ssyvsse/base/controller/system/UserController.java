@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -112,19 +114,27 @@ public class UserController extends BaseController{
 	}
 	
 	@GetMapping("/changePwd")
-	public String changePwd(){
-		return "admin/changePwd";
+	public String changePwd(ModelMap map){
+		User user = (User)request.getSession().getAttribute("user");
+		if(user!=null){
+			map.put("USER", user);
+			return "admin/changePwd";
+		}else{
+			return "redirect:/admin/login.html";
+		}
 	}
 	
 	@PostMapping("/changePassWord")
 	@ResponseBody
-	public JsonResult changePwd(Integer id,String password,String password2,HttpSession session){
+	public JsonResult changePwd(String id,String password,String password2,HttpSession session){
 		User user = userService.findByPassword(id);
 		if(MD5Utils.md5(password).equals(user.getPassword())){
 			try {
 				userService.updatePwd(id, password2);
 				String action = "修改id="+id+"用户的密码";
 				logService.insert(request, session, action);
+				Subject subject = SecurityUtils.getSubject();
+				subject.logout();
 			} catch (Exception e) {
 				return JsonResult.failure(e.getMessage());
 			}

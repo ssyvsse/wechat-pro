@@ -73,7 +73,7 @@ public interface IUserService extends IBaseService<User, String> {
 	 * @param id
 	 * @return
 	 */
-	public User findByPassword(Integer id);
+	public User findByPassword(String id);
 
 	/**
 	 * 后台修改密码
@@ -82,5 +82,5 @@ public interface IUserService extends IBaseService<User, String> {
 	 * @param password
 	 * @return
 	 */
-	public int updatePwd(Integer id, String password);
+	public int updatePwd(String id, String password);
 }

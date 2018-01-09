@@ -17,4 +17,6 @@ public class WebSocketChat {
 	public String chatFrame(){
 		return "admin/chat";
 	}
+	
+	
 }

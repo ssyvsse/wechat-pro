@@ -54,7 +54,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-8 col-sm-offset-3">
-                                    <button id="sub" class="btn btn-primary" type="submit">提交</button> <a href="/admin/user/back"><button id="bt" class="btn btn-primary" type="button">返回首页</button></a>
+                                    <button id="sub" class="btn btn-primary" type="submit">提交</button> <a href="/admin/login.html"><button id="bt" class="btn btn-primary" type="button">返回首页</button></a>
                                 
                                 </div>
                                  
