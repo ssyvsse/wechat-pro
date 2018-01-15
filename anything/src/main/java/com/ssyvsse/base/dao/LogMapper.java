@@ -14,16 +14,45 @@ import com.ssyvsse.base.entity.Log;
  *
  * @Date 2018年1月7日 下午5:05:02
  */
-
 public interface LogMapper {
 
-	List<Log> findByOperatorAndOperateTime(@Param("searchText") String searchText, @Param("begin") String begin,
-			@Param("end") String end);
+	/**
+	 * 
+	 * @param key
+	 * @param begin
+	 * @param endTime
+	 * @param start
+	 * @param end
+	 * @param sortName
+	 * @param sortOrder
+	 * @return
+	 */
+	List<Log> selectLogLikeKeyAndFromBeginToEnd(@Param("key") String key, @Param("beginTime") String begin,
+			@Param("endTime") String endTime, @Param("start") int start, @Param("end") int end,
+			@Param("sortName") String sortName, @Param("sortOrder") String sortOrder);
 
-	@Insert("insert into system_log(operational_context,operation_time,operator,ip) values(#{operationalContext},#{operationTime},#{operator},#{ip})")
+	/**
+	 * 计算数量
+	 * 
+	 * @param key
+	 * @param begin
+	 * @param endTime
+	 * @param start
+	 * @param end
+	 * @param sortName
+	 * @param sortOrder
+	 * @return
+	 */
+	Long count(@Param("key") String key, @Param("beginTime") String begin, @Param("endTime") String endTime,
+			@Param("start") int start, @Param("end") int end, @Param("sortName") String sortName,
+			@Param("sortOrder") String sortOrder);
+
+	/**
+	 * 插入
+	 * 
+	 * @param log
+	 */
 	void insert(Log log);
 
-	@Select(value="select * from system_log order by id desc")
-	@ResultMap(value="logMap")
-	List<Log> findAll();
+	Long countId();
 }

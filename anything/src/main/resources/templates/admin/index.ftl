@@ -89,8 +89,6 @@
 					</li>
 					</@shiro.hasPermission>
 				</ul>
-
-
 			</div>
 		</nav>
 		<!--左侧导航结束-->

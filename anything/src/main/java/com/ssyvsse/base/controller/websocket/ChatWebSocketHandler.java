@@ -34,6 +34,8 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 	
 	public final static Map<String,List<ChatMessage>> chatMsgListMap = new HashMap<String,List<ChatMessage>>();
 	
+	public final static Map<String,List<ChatMessage>> chatMsgListMapNew = new HashMap<String,List<ChatMessage>>();
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("已经建立连接");
@@ -42,6 +44,10 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 		if(object != null && object instanceof String){
 			uid = (String)object;
 			sessionMap.put(uid, session);
+			List<ChatMessage> chatMsgList = chatMsgListMap.get(uid);
+			chatMsgListMap.put(uid, chatMsgList);
+			Gson gson = new Gson();
+			session.sendMessage(new TextMessage(gson.toJson(chatMsgListMap)));
 		}
 		
 		
@@ -79,14 +85,29 @@ public class ChatWebSocketHandler implements WebSocketHandler {
 				chatMessage = gson.fromJson(object.toString(), ChatMessage.class);
 				System.out.println(chatMessage);
 				List<ChatMessage> chatMsgList = chatMsgListMap.get(uid);
+				List<ChatMessage> chatMsgListNew = new ArrayList<ChatMessage>();
 				if(chatMsgList==null){
 					chatMsgList = new ArrayList<ChatMessage>();
 					chatMsgList.add(chatMessage);
+					chatMsgListMap.put(uid, chatMsgList);
+					session.sendMessage(new TextMessage(gson.toJson(chatMsgListMap)));
 				}else{
-					chatMsgList.add(chatMessage);
+					String toName = chatMessage.getToName();
+					if(toName.equals(uid)){
+						chatMsgList.add(chatMessage);
+						chatMsgListNew.add(chatMessage);
+						chatMsgListMap.put(uid, chatMsgList);
+						chatMsgListMapNew.put(uid, chatMsgListNew);
+					}else{
+						chatMsgList.add(chatMessage);
+						chatMsgListNew.add(chatMessage);
+						chatMsgListMap.put(uid, chatMsgList);
+						chatMsgListMapNew.put(uid, chatMsgListNew);
+						chatMsgListMapNew.put(toName, chatMsgListNew);
+					}
+					session.sendMessage(new TextMessage(gson.toJson(chatMsgListMapNew)));
 				}
-				chatMsgListMap.put(uid, chatMsgList);
-				session.sendMessage(new TextMessage(gson.toJson(chatMsgListMap)));
+				
 			} catch (Exception e) {
 				session.sendMessage(new TextMessage("类型转换错误"));
 			}

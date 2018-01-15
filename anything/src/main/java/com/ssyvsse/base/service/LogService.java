@@ -18,9 +18,11 @@ import com.ssyvsse.base.entity.Log;
  */
 public interface LogService {
 
-	public void insert(HttpServletRequest request, HttpSession session, String action);
+	void insert(HttpServletRequest request, HttpSession session, String action);
 
 	Page<Log> selectAllLog(String searchText, String begin, String end, PageRequest pageRequest);
 
 	LogMapper getLogMapper();
+
+	Long countAll(String key, String begin, String endTime, int start, int end, String sortName, String sortOrder);
 }

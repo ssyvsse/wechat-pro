@@ -3,6 +3,7 @@ package com.ssyvsse.base.config.shiro;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,14 +17,18 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.ssyvsse.base.constants.SessionConstants;
 import com.ssyvsse.base.entity.Resource;
 import com.ssyvsse.base.entity.Role;
 import com.ssyvsse.base.entity.User;
 import com.ssyvsse.base.service.IUserService;
 import com.ssyvsse.util.MD5Utils;
+import com.ssyvsse.util.SpringContextUtil;
 
 /**
  * @author llb
@@ -35,7 +40,7 @@ public class BackgroundRealm extends AuthorizingRealm {
 
 	@Autowired
 	private IUserService userService;
-	
+
 	public BackgroundRealm() {
 		super(new AllowAllCredentialsMatcher());
 		setAuthenticationTokenClass(UsernamePasswordToken.class);
@@ -51,13 +56,12 @@ public class BackgroundRealm extends AuthorizingRealm {
 		 * setAuthorizationCacheName("resourceCache");
 		 */
 	}
-	
-	
+
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		
-		if(principals.getPrimaryPrincipal() instanceof User) {
-			User user = (User)principals.getPrimaryPrincipal();
+
+		if (principals.getPrimaryPrincipal() instanceof User) {
+			User user = (User) principals.getPrimaryPrincipal();
 			SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 			User dbUser = userService.getUserDao().findByUserName(user.getUserName());
 			Set<String> shiroPermissions = new HashSet<String>();
@@ -73,40 +77,39 @@ public class BackgroundRealm extends AuthorizingRealm {
 			authorizationInfo.setRoles(roleSet);
 			authorizationInfo.setStringPermissions(shiroPermissions);
 			return authorizationInfo;
-		}else {
+		} else {
 			return null;
 		}
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		
+
 		String username = (String) token.getPrincipal();
 		User user = userService.getUserDao().findByUserName(username);
-		String password = new String((char[])token.getCredentials());
-		
-		if(user==null) {
+		String password = new String((char[]) token.getCredentials());
+
+		if (user == null) {
 			throw new UnknownAccountException("帐号不正确");
 		}
-		
-		if(!"background".equals(user.getLoginType())) {
+
+		if (!"background".equals(user.getLoginType())) {
 			throw new UnknownAccountException("帐号不正确");
 		}
-		
-		if(user.getLocked()==1) {
+
+		if (user.getLocked() == 1) {
 			throw new LockedAccountException("帐号已被锁定,请联系管理员");
 		}
-		
-		if(!user.getPassword().equals(MD5Utils.md5(password))) {
+
+		if (!user.getPassword().equals(MD5Utils.md5(password))) {
 			throw new IncorrectCredentialsException("密码不正确");
 		}
-		
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,
-				password, getName());
-		
+
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+
 		return info;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "backgroundRealm";

@@ -6,12 +6,30 @@
 <title>版本号管理</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
+<link href="${ctx!}/assets/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
 <script src="${ctx!}/assets/js/jquery.min.js?v=${version }"></script>
+<script src="${ctx!}/assets/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
 </head>
-
+<style>
+.versionDiv{
+	width:50%;
+	height:300px;
+	margin:0 auto;
+}
+</style>
 <body>
-	<h3>当前版本号为：<input id='version' type="text" value="${version }"></h3>
-	<button onclick="updateVersion()">确定修改</button>
+	<div class='versionDiv'>
+		<h3>
+			<form class='form-inline'>
+				<div class="form-group">
+				    <label>当前版本号为：</label>
+				    <input id='version' class='form-control input-lg' type="text" value="${version }">
+				    <button class='btn btn-default input-lg' onclick="updateVersion()">确定修改</button>
+				</div>
+			</form>
+		 </h3>
+		
+	</div>
 </body>
 <script type="text/javascript">
 	function updateVersion(){

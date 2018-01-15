@@ -36,7 +36,7 @@ public class Log extends BaseEntity{
 
 	private String operator;
 
-	@JSONField(format = "yyyy-MM-dd")
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private Date operationTime;
 
 	private String operationalContext;

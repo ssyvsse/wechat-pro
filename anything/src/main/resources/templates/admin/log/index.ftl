@@ -33,6 +33,11 @@
             margin: 0 auto !important;
         }
     } 
+    .dateCls{
+    	width:200px;
+    	display:inline;
+    	margin:10px;
+    }
 </style>
 
 </head>
@@ -43,7 +48,10 @@
             <div class="col-sm-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>系统日志</h5>
+                        <h4>系统日志&nbsp;&nbsp;&nbsp;在线用户人数: <span>${onlineCount}</span>  </h4>
+                    </div>
+                    <div class="operation-box">
+                    
                     </div>
                     <div class="ibox-content">                       
                         <hr>
@@ -72,18 +80,26 @@
     <script src="${ctx!}/assets/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
     <script src="${ctx!}/assets/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 
+	<link href="${ctx!}/assets/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
     <!-- Peity -->
     <script src="${ctx!}/assets/js/plugins/peity/jquery.peity.min.js"></script>
 
     <script src="${ctx!}/assets/js/plugins/layer/layer.min.js"></script>
 
     <!-- 自定义js -->
-    <script src="${ctx!}/assets/js/content.js?v=1.0.0"></script>
+    <script src="${ctx!}/assets/js/content.js?v=${version}"></script>
 
     <!-- Page-Level Scripts -->
     <script>
-        $(document).ready(function () {
-        	//初始化表格,动态从服务器加载数据  
+    	window.onload = destroy();
+    	function destroy(){
+    		var searchText=$("#searchText").val();
+			var begin=$("#beginTime").val();
+			var end=$("#endTime").val();
+    		
+    		$("#table_list").bootstrapTable('destroy');
+    		//初始化表格,动态从服务器加载数据  
 			$("#table_list").bootstrapTable({
 			    //使用get请求到服务器获取数据  
 			    method: "POST",
@@ -102,18 +118,37 @@
 			    //记录数可选列表  
 			    pageList: [5, 10, 15, 20, 25],
 			    //是否启用查询  
-			    search: true,
+			    search: false,
 			    //是否启用详细信息视图
 			    detailView:true,
-			    detailFormatter:detailFormatter,
+			    detailFormatter:function(index, row) {
+			        var html = [];
+			        html.push('<p><b>描述:</b> ' + row.description + '</p>');
+			        return html.join('');
+			    },
 			    //表示服务端请求  
-			    sidePagination: "client",
+			    sidePagination: "server",
 			    //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder  
 			    //设置为limit可以获取limit, offset, search, sort, order  
+			    queryParams:function(params){ 
+					var temp = {
+							pageSize:params.pageSize,
+							pageNumber:params.pageNumber,
+							sortOrder:params.sortOrder,	
+							sortName:params.sortName,	
+							searchText:searchText,
+							begin:begin,
+							end:end
+					};
+					return temp;
+				}, 
 			    queryParamsType: "undefined",
 			    //json数据解析
 			    responseHandler: function(res) {
-			    	return res
+			    	return {
+			            "rows": res.content,
+			            "total": res.totalElements
+			        };
 			    },
 			    //数据列
 			    columns: [{
@@ -126,21 +161,26 @@
 			    },{
 			        title: "操作时间",
 			        field: "operationTime",
+			        sortable: true
 			    },{
 			        title: "操作人",
-			        field: "operator"
+			        field: "operator",
+			        sortable: true
 			    },{
 			        title: "ip",
-			        field: "ip"
+			        field: "ip",
+			        sortable: true
 			    }]
 			});
+    		console.log(searchText)
+    	}
+        $(document).ready(function () {
+        	$(".operation-box").prepend("<input type='date' id='beginTime' placeholder='开始时间' onchange='destroy();' class='form-control dateCls'  > ")
+        	.append("-&nbsp;&nbsp; <input type='date' id='endTime' placeholder='结束时间' class='form-control dateCls' onchange='destroy();' >")
+        	.append("&nbsp;&nbsp; <input type='text' id='searchText' placeholder='请输入查询关键字' class='form-control dateCls'>")
+        	.append("&nbsp;&nbsp; <input type='button' id='shBtn' value='搜索' onclick='destroy();' class='btn btn-default'>");
         });
                        
-        function detailFormatter(index, row) {
-	        var html = [];
-	        html.push('<p><b>描述:</b> ' + row.description + '</p>');
-	        return html.join('');
-	    }
     </script>
 
     

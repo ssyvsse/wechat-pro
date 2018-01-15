@@ -1,5 +1,9 @@
 package com.ssyvsse.base.controller.websocket;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -28,7 +32,18 @@ public class HandShake implements HandshakeInterceptor {
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
 			Map<String, Object> attributes) throws Exception {
+		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		logger.info("WebSocket:user[ID:"+((ServletServerHttpRequest) request).getServletRequest().getSession(false).getAttribute("user") + "]已经建立连接");
+//		logger.info("sessionId:"+((ServletServerHttpRequest) request).getServletRequest().getSession(false).getId());
+//		logger.info("getCreationTime:"+((ServletServerHttpRequest) request).getServletRequest().getSession(false).getCreationTime());
+//		logger.info("getLastAccessedTime:"+df.format(new Date(((ServletServerHttpRequest) request).getServletRequest().getSession(false).getLastAccessedTime())));
+//		logger.info("getMaxInactiveInterval:"+((ServletServerHttpRequest) request).getServletRequest().getSession(false).getMaxInactiveInterval());
+//		logger.info("getMaxInactiveInterval:"+((ServletServerHttpRequest) request).getServletRequest().getServletContext());
+//		Enumeration<String> enumer = ((ServletServerHttpRequest) request).getServletRequest().getSession(false).getAttributeNames();
+//		while (enumer.hasMoreElements()) {
+//			String string = (String) enumer.nextElement();
+//			System.out.println(string);
+//		}
 		if (request instanceof ServletServerHttpRequest) {
 			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
 			HttpSession session = servletRequest.getServletRequest().getSession(false);
