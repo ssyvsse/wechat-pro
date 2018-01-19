@@ -36,8 +36,9 @@ public class DateUtils {
 	 * @throws ParseException
 	 */
 	public static String formatDateByDateStr(String format, String date) throws ParseException {
-		DateFormat df = new SimpleDateFormat(format);
-		return df.format(df.parse(date));
+		DateFormat df = new SimpleDateFormat("yyyyMMdd");
+		DateFormat df2 = new SimpleDateFormat(format);
+		return df2.format(df.parse(date));
 	}
 
 	/**

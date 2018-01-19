@@ -20,8 +20,8 @@ import com.ssyvsse.util.DateUtils;
  *
  * @Date 2018年1月17日
  */
-@Component
-@EnableScheduling
+//@Component
+//@EnableScheduling
 public class CrawlSixLotteryJob {
 
 	@Autowired
@@ -43,7 +43,7 @@ public class CrawlSixLotteryJob {
 	// Cache-Control: no-cache
 	@Scheduled(fixedRate = 1000 * 1000 * 1000)
 	public void crawl() {
-		for (int i =2018; i <= 2018; i++) {
+		for (int i =1986; i <= 2018; i++) {
 			String result = null;
 			try {
 				result = HttpsUtil.crawl6hcPost(i);
