@@ -37,14 +37,39 @@ public class SixHcUtil {
 	 * @return
 	 */
 	public static Integer openColor(Integer openCode) {
-		if (openCode < 0 || openCode > 49) {
+		if (openCode <= 0 || openCode > 49) {
 			return -1;
 		}
 		// 构造波色数组
-		Integer[] attrs = new Integer[] { 1, 1, 2, 2, 3, 3, 1, 1, 3, 3, 2, 1, 1, 3, 3, 2, 2, 1, 1, 3, 2, 2, 1, 1, 3, 3,
-				2, 2, 1, 1, 3, 2, 2, 1, 1, 3, 3, 2, 2, 1, 3, 3, 2, 2, 1, 1, 3, 3, 2 };
-		return attrs[openCode];
+		Integer[] attrs = new Integer[] 
+				{1,1,3,3,2,2,1,1,3,3,2,1,
+				 1,3,3,2,2,1,1,3,2,2,1,1,
+				 3,3,2,2,1,1,3,2,2,1,1,3,
+				 3,2,2,1,3,3,2,2,1,1,3,3,
+				 				   2};
+		return attrs[openCode-1];
 	}
+	
+	/**
+	 * 根据开奖号码获取对应的五行元素<br>
+	 * 1、金 2、木 3、水 4、火 5、土
+	 * @param openCode
+	 * @return
+	 */
+	public static Integer fiveElement(Integer openCode) {
+		if (openCode <= 0 || openCode > 49) {
+			return -1;
+		}
+		// 构造五行数组
+		Integer[] attrs = new Integer[] 
+			{4,4,1,1,3,3,2,2,4,4,5,5,
+			 3,3,2,2,1,1,5,5,3,3,4,4,
+			 1,1,5,5,2,2,4,4,1,1,3,3,
+			 2,2,4,4,5,5,3,3,2,2,1,1,
+			 				   5};
+		return attrs[openCode - 1];
+	}
+	
 
 	/**
 	 * 根据年份求出当年生肖数组
@@ -124,9 +149,7 @@ public class SixHcUtil {
 	}
 
 	public static void main(String[] args) {
-		for (int i = 1; i <= 49 ; i++) {
-			openColor(i-1);
-		}
+		
 	}
 
 }
