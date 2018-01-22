@@ -96,7 +96,7 @@ public class LoginServiceImpl implements LoginService {
 					} catch (AuthenticationException e) {
 						logger.info("登录异常!");
 						logger.info(e.getCause().getMessage());
-						return JsonResult.failure(e.getMessage());
+						return JsonResult.failure("用户名或者密码错误!");
 					}
 				} else {
 					return JsonResult.success();
