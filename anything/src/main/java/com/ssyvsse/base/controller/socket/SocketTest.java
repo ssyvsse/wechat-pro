@@ -24,26 +24,20 @@ public class SocketTest {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		String hostName = address.getHostName();// 获取计算机名
+		String hostName = address.getHostName();
 		String ip = address.getHostAddress();// 获取IP地址
-		System.out.println(hostName + "-" + ip);
-		byte[] bytes = address.getAddress();// 获取字节数组形式的IP地址,以点分隔的四部分
-		System.out.println(new String(bytes));
+		//byte[] bytes = address.getAddress();// 获取字节数组形式的IP地址,以点分隔的四部分
+		System.out.println("计算机名:"+hostName+",ip="+ip);
 
 		// 创建一个URL的实例
 		URL baidu = null;
 		URL url = null;
 		try {
 			baidu = new URL("https://www.2349m.com");
-			url = new URL(baidu, "/dataCenter/newly?typeid=38&token=pi");
-			System.out.println(url.getProtocol());// 获取协议
-			System.out.println(url.getHost());// 获取主机
-			System.out.println(url.getPort());// 如果没有指定端口号，根据协议不同使用默认端口。此时getPort()方法的返回值为
-												// -1
-			System.out.println(url.getPath());// 获取文件路径
-			System.out.println(url.getFile());// 文件名，包括文件路径+参数
-			System.out.println(url.getRef());// 相对路径，就是锚点，即#号后面的内容
-			System.out.println(url.getQuery());// 查询字符串，即参数
+			url = new URL(baidu, "/dataCenter/newly?typeid=38&token=pCiY2EE40xRWZrEX");
+			System.out.println("协议protocol:"+url.getProtocol()+",主机host:"+url.getHost()+",端口:"+url.getPort());//如果没有指定端口号，根据协议不同使用默认端口 此时getPort()方法的返回值为-1
+			System.out.println("文件路径:"+url.getPath()+",路径+参数:"+url.getFile());
+			System.out.println("相对路径:"+url.getRef()+",查询字符串:"+url.getQuery());
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
