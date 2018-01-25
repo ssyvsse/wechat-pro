@@ -63,6 +63,16 @@
 					</div>
 				</div>
 			</div>
+			<div class="googleId" style="display:none">    
+       <!--  <input type="button" value="点击获取二维码" id="qrcode">
+        <p>请先下载google身份验证，如已下载未添加账户请点击获取二维码进行添加，如已添加，请直接进行验证码验证操作</p> -->
+        <#if binding=="未绑定">
+        <div id="code"></div> 
+        </#if>
+        <input type="hidden" id="binding" value="${binding}">
+        <input type="text" placeholder="请输入google验证码" id="googleCode"/>
+        <input type="button" value="验证" id="verify">
+      </div>
 		</div><!-- /container -->
 		<script src="/js/TweenLite.min.js"></script>
 		<script src="/js/EasePack.min.js"></script>
@@ -124,6 +134,44 @@
 					},
 				});
 			}
+			
+			$(function(){
+	  /* $("#qrcode").on("click",function(){ */
+		  var binding=$("#binding").attr("value");
+	  if(binding=="未绑定"){
+		  $.post("/admin/getSecret",{},function(data){
+			 var value=eval("(" + data + ")");
+			 var qrcode=value.data;
+			  $("#code").empty();
+			  $("#code").qrcode({ 
+				  canvas: "table", //table方式 
+				    width: 200, //宽度 
+				    height:200, //高度 
+				    text:qrcode //任意内容 
+				}); 
+				  })
+	  }
+	  /* }) */
+	  $("#verify").on("click",function(){
+		  var googleCode=$("#googleCode").val();
+		  if(googleCode==null||googleCode==""){
+			  googleCode="1";
+		  }
+		  $.post("/admin/googleCode",{googleCode:googleCode},function(data){
+			  var value=eval("("+data+")");
+			  if(value.code==0){
+				  window.location.href = "/admin/index";
+			  }else{
+				  layer.msg('验证失败，请输入正确的验证码', {
+						time : 3000
+					});
+			  }
+			  
+				}); 
+				})
+		  
+		  
+ }) 
 		</script>
 	</body>
 </html>

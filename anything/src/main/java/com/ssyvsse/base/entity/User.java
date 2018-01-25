@@ -155,7 +155,39 @@ public class User extends BaseEntity {
 	private Integer sound = -1;
 	private String province;
 	private Integer alias = 2;// PC端注册默认为2，APP注册默认为1
+	private String secret;
+	private String binding="未绑定";
+	private String google_open="开启";
 
+	public String getGoogle_open()
+	{
+		return google_open;
+	}
+
+	public void setGoogle_open(String google_open)
+	{
+		this.google_open = google_open;
+	}
+
+	public String getSecret()
+	{
+		return secret;
+	}
+
+	public void setSecret(String secret)
+	{
+		this.secret = secret;
+	}
+
+	public String getBinding()
+	{
+		return binding;
+	}
+
+	public void setBinding(String binding)
+	{
+		this.binding = binding;
+	}
 	public String getRegisterType() {
 		return registerType;
 	}
