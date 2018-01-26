@@ -21,4 +21,12 @@ public interface LoginService {
 	 * @return
 	 */
 	public JsonResult backLogin(User user, HttpSession session, HttpServletRequest request);
+	
+	public void updateSecretByUsername(String userName, String secret);
+
+	public User findUserByUsername(String userName);
+
+	public void updateGoogle_openById(String id, String google_open);
+
+	public void updateBindingById(String id, String binding);
 }

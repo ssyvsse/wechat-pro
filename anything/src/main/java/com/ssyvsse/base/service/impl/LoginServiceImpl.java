@@ -57,22 +57,22 @@ public class LoginServiceImpl implements LoginService {
 							System.out.println("subject is null");
 						}
 						boolean rememberMe = false;
-						if(request.getParameter("rememberMe")!=null&&"true".equals((String)request.getParameter("rememberMe"))){
+						if (request.getParameter("rememberMe") != null
+								&& "true".equals((String) request.getParameter("rememberMe"))) {
 							rememberMe = true;
 						}
 						DefaultUsernamepasswordToken token = new DefaultUsernamepasswordToken(user.getUserName(),
 								user.getPassword(), user.getLoginType());
-						if(token.isRememberMe()){
-							if(subject.isAuthenticated()){
+						if (token.isRememberMe()) {
+							if (subject.isAuthenticated()) {
 								logger.info("成功登录后台...");
 								return JsonResult.success();
 							}
-						}else{
-							if(rememberMe){
+						} else {
+							if (rememberMe) {
 								token.setRememberMe(true);
 							}
 						}
-						
 
 						subject.login(token);
 						logger.info("后台用户登录token:" + token.toString());
@@ -91,6 +91,10 @@ public class LoginServiceImpl implements LoginService {
 							loginUser.setUser_ip(ip);
 							userDao.save(loginUser);
 						}
+						if("开启".equals(loginUser.getGoogle_open())){
+							
+						}
+						
 						logger.info("成功登录后台...");
 						return JsonResult.success();
 					} catch (AuthenticationException e) {
@@ -120,6 +124,26 @@ public class LoginServiceImpl implements LoginService {
 				return true;
 			}
 		}
+	}
+
+	@Override
+	public void updateSecretByUsername(String userName, String secret) {
+		userDao.updateSecretByUsername(userName, secret);
+	}
+
+	@Override
+	public User findUserByUsername(String userName) {
+		return userDao.findByUserName(userName);
+	}
+
+	@Override
+	public void updateGoogle_openById(String id, String google_open) {
+		userDao.updateGoogle_openById(id, google_open);
+	}
+
+	@Override
+	public void updateBindingById(String id, String binding) {
+		userDao.updateBindingById(id, binding);
 	}
 
 }
