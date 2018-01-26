@@ -86,19 +86,19 @@ public class TokenThread {
 	}
 
 	private void outputAccessToken(AccessToken accessToken) throws IOException {
-		File file = new File("D://anything/wechat/temp/");
-		if (!file.exists()) {
+		File file = new File("temp");
+		if(!file.exists()) {
 			file.mkdirs();
 		}
-		FileWriter fw = new FileWriter(file.getAbsolutePath() + "/access_token message.txt",true);
+		log.info("文件所在路径为:"+file.getAbsolutePath()+"\\"+DateUtils.getToday()+" access_token.txt");
+		FileWriter fw = new FileWriter(file+"/"+DateUtils.getToday()+" access_token.txt",true);
+		
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(DateUtils.getNow());
 		bw.newLine();
 		bw.write("access_token=" + accessToken.getAccess_token());
 		bw.newLine();
 		bw.write("expired_time=" +  DateUtils.formatDate(DateUtils.stampToDate(""+accessToken.getExpiredTime())));
-		bw.newLine();
-		bw.write("json=" + accessToken.getJson());
 		bw.newLine();
 		bw.newLine();
 		bw.close();

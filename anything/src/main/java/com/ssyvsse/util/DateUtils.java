@@ -62,6 +62,19 @@ public class DateUtils {
 	}
 
 	/**
+	 * 获取当天日期
+	 * 
+	 * @return
+	 */
+	public static String getToday() {
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		int date = calendar.get(Calendar.DATE);
+		return year + "" + ((month + 1) < 10 ? ("0" + (month + 1)) : (month + 1)) + (date < 10 ? ("0" + date) : date);
+	}
+
+	/**
 	 * 获取当前时间后一天 <br/>
 	 * type=1:return yyyy-MM-dd<br/>
 	 * type=2:return yyyyMMdd<br/>

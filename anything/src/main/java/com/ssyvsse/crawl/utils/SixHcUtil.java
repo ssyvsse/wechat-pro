@@ -32,21 +32,6 @@ public class SixHcUtil {
 	}
 
 	/**
-	 * 根据年份算出所属的生肖
-	 * 
-	 * @param year
-	 * @return
-	 */
-	public static String getYear(Integer year) {
-		if (year < 1900) {
-			return "未知";
-		}
-		Integer start = 1900;
-		String[] animals = new String[] { "鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪" };
-		return animals[(year - start) % animals.length];
-	}
-
-	/**
 	 * 根据开奖号码计算生肖
 	 * 
 	 * @param openCode
@@ -58,7 +43,7 @@ public class SixHcUtil {
 			return null;
 		}
 		// 1、获取当年的生肖
-		String animal = getYear(year);
+		String animal = getAnimalNameByYear(year);
 		if ("未知".equals(animal)) {
 			return null;
 		}
@@ -424,6 +409,24 @@ public class SixHcUtil {
 		while ((i = sc.nextInt()) <= 49) {
 			System.out.println("号码：" + i);
 			System.out.println("生肖：" + getAnimalByOpenCode(i, 2017) + ":");
+			Integer fiveElement = fiveElement(i);
+			switch (fiveElement) {
+			case 1:
+				System.out.println("五行：金");
+				break;
+			case 2:
+				System.out.println("五行：木");
+				break;
+			case 3:
+				System.out.println("五行：水");
+				break;
+			case 4:
+				System.out.println("五行：火");
+				break;
+			case 5:
+				System.out.println("五行：土");
+				break;
+			}
 			System.out.println("家禽：" + (getPoultryOrBeastListByOpenCode(i, 2017) == 1 ? "家禽" : "野兽"));
 			System.out.println("男女：" + (getBoyOrGirlByOpenCode(i, 2017) == 1 ? "男" : "女"));
 			System.out.println("天地：" + (getHeavenOrGroundByOpenCode(i, 2017) == 1 ? "天" : "地"));
