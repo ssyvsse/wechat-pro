@@ -20,6 +20,7 @@ public class EasyClient2 {
 		Socket socket = null;
 		try {
 			socket = new Socket("localhost",10086);
+			System.out.println(socket.getLocalPort());
 			new Thread(new ClientRead(socket)).start();
 			new Thread(new ClientWrite(socket)).start();
 		} catch (Exception e) {
@@ -46,7 +47,10 @@ class ClientRead implements Runnable{
 		try {
 			while(true){
 				br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-				System.out.println("服务端说:"+br.readLine());
+				String line = br.readLine();
+				if(line!=null) {
+					System.out.println("服务端说:"+line);
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("2");
