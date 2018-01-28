@@ -54,7 +54,7 @@ public class LoginController {
 			/**
 			 * gif格式动画验证码 宽，高，位数。
 			 */
-			Captcha captcha = new GifCaptcha(146, 30, 6);
+			Captcha captcha = new GifCaptcha(146, 30, 4);
 			captcha.out(response.getOutputStream());
 			session.setAttribute("_code", captcha.text().toLowerCase());
 		} catch (Exception e) {
@@ -108,7 +108,7 @@ public class LoginController {
 		loginService.updateBindingById(user.getId().toString(), binding);
 		// 把这个qrcode生成二维码，用google身份验证器扫描二维码就能添加成功
 		String qrcode = GoogleAuthenticator.getQRBarcode(userName, secret);
-		System.out.println("qrcode:" + qrcode + ",key:" + secret);
+		logger.info("qrcode:" + qrcode + ",key:" + secret);
 		return JsonResult.success("获取成功", qrcode);
 	}
 
@@ -125,7 +125,7 @@ public class LoginController {
 		GoogleAuthenticator ga = new GoogleAuthenticator();
 		ga.setWindowSize(3);
 		boolean r = ga.check_code(secret, googleCode, t);
-		System.out.println("检查code是否正确？" + r);
+		logger.info("检查code是否正确？" + r);
 		if (r) {
 			session.setAttribute("googleCode", googleCode);
 			return JsonResult.success("验证成功");

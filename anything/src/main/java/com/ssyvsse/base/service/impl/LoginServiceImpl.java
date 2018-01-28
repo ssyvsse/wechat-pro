@@ -44,18 +44,6 @@ public class LoginServiceImpl implements LoginService {
 				if ("background".equals(user.getLoginType())) {
 					try {
 						Subject subject = SecurityUtils.getSubject();
-						if (subject != null) {
-							PrincipalCollection principalCollection = subject.getPrincipals();
-							if (principalCollection != null) {
-								for (Object object : principalCollection) {
-									System.out.println("---" + object.toString());
-								}
-							} else {
-								System.out.println("principals is null");
-							}
-						} else {
-							System.out.println("subject is null");
-						}
 						boolean rememberMe = false;
 						if (request.getParameter("rememberMe") != null
 								&& "true".equals((String) request.getParameter("rememberMe"))) {
@@ -76,12 +64,6 @@ public class LoginServiceImpl implements LoginService {
 
 						subject.login(token);
 						logger.info("后台用户登录token:" + token.toString());
-
-						/*
-						 * logger.info("token.getPrincipal() = " +
-						 * subject.getPrincipal() + "   isTrue = " +
-						 * (subject.getPrincipal() instanceof User));
-						 */
 						logger.info("user.id = " + ((User) subject.getPrincipal()).getId());
 						session.setAttribute("user", subject.getPrincipal());
 						User loginUser = (User) subject.getPrincipal();
@@ -92,11 +74,16 @@ public class LoginServiceImpl implements LoginService {
 							userDao.save(loginUser);
 						}
 						if("开启".equals(loginUser.getGoogle_open())){
-							
+							if("未绑定".equals(loginUser.getBinding())){
+								session.setAttribute("binding", "未绑定");
+							}else{
+								session.setAttribute("binding", "绑定");
+							}
+							return JsonResult.success("google validate");
+						}else{
+							logger.info("成功登录后台...");
+							return JsonResult.success();
 						}
-						
-						logger.info("成功登录后台...");
-						return JsonResult.success();
 					} catch (AuthenticationException e) {
 						logger.info("登录异常!");
 						logger.info(e.getCause().getMessage());
@@ -128,7 +115,11 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public void updateSecretByUsername(String userName, String secret) {
-		userDao.updateSecretByUsername(userName, secret);
+		try {
+			userDao.updateSecretByUsername(userName, secret);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

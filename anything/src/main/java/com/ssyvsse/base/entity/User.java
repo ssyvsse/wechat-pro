@@ -53,16 +53,18 @@ public class User extends BaseEntity {
 	 */
 	private String nickName;
 
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", nickName=" + nickName + ", password=" + password
 				+ ", sex=" + sex + ", birthday=" + birthday + ", telephone=" + telephone + ", email=" + email
 				+ ", address=" + address + ", deleteStatus=" + deleteStatus + ", locked=" + locked + ", description="
-				+ description + ", createTime=" + createTime + ", updateTime=" + updateTime + ", code=" + code
-				+ ", old=" + old + ", loginType=" + loginType + ", sessionid=" + sessionid + ", age=" + age
-				+ ", user_ip=" + user_ip + ", last_login_time=" + last_login_time + ", head_portrait=" + head_portrait
-				+ ", token=" + token + ", score=" + score + ", city=" + city + ", num=" + num + ", wechatId=" + wechatId
-				+ ", qid=" + qid + ", sound=" + sound + ", province=" + province + ", alias=" + alias
+				+ description + ", createTime=" + createTime + ", updateTime=" + updateTime + ", roles=" + roles
+				+ ", code=" + code + ", old=" + old + ", loginType=" + loginType + ", sessionid=" + sessionid + ", age="
+				+ age + ", user_ip=" + user_ip + ", last_login_time=" + last_login_time + ", head_portrait="
+				+ head_portrait + ", token=" + token + ", score=" + score + ", city=" + city + ", num=" + num
+				+ ", wechatId=" + wechatId + ", qid=" + qid + ", sound=" + sound + ", province=" + province + ", alias="
+				+ alias + ", secret=" + secret + ", binding=" + binding + ", google_open=" + google_open
 				+ ", registerType=" + registerType + ", registUrl=" + registUrl + "]";
 	}
 
