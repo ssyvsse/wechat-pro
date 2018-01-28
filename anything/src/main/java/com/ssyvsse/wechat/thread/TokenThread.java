@@ -1,20 +1,15 @@
 package com.ssyvsse.wechat.thread;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.ssyvsse.util.DateUtils;
 import com.ssyvsse.wechat.config.ApiConfig;
 import com.ssyvsse.wechat.config.ApiConfigKit;
+import com.ssyvsse.wechat.mapper.AccessTokenMapper;
 import com.ssyvsse.wechat.pojo.AccessToken;
 import com.ssyvsse.wechat.utils.WXPropertiesUtil;
 import com.ssyvsse.wechat.utils.WXUtil;
@@ -50,6 +45,9 @@ public class TokenThread {
 
 	public static int sign = 0;
 
+	@Autowired
+	private AccessTokenMapper accessTokenMapper;
+
 	/**
 	 * 7200秒执行一次
 	 */
@@ -76,8 +74,17 @@ public class TokenThread {
 			}
 			log.info("获取成功，accessToken:" + accessToken.getAccess_token());
 			try {
-				outputAccessToken(accessToken);
-			} catch (IOException e) {
+				AccessToken dbAccessToken = accessTokenMapper.findByType("wx_access_token");
+				if (dbAccessToken == null) {
+					accessToken.setType("wx_access_token");
+					accessTokenMapper.saveAndFlush(accessToken);
+				} else {
+					dbAccessToken.setAccess_token(accessToken.getAccess_token());
+					dbAccessToken.setExpiredTime(accessToken.getExpiredTime());
+					accessTokenMapper.saveAndFlush(dbAccessToken);
+				}
+				log.info("access_token保存成功");
+			} catch (Exception e) {
 				log.error("access_token保存失败");
 			}
 		} else {
@@ -85,24 +92,28 @@ public class TokenThread {
 		}
 	}
 
-	private void outputAccessToken(AccessToken accessToken) throws IOException {
-		File file = new File("temp");
-		if(!file.exists()) {
-			file.mkdirs();
-		}
-		log.info("文件所在路径为:"+file.getAbsolutePath()+"\\"+DateUtils.getToday()+" access_token.txt");
-		FileWriter fw = new FileWriter(file+"/"+DateUtils.getToday()+" access_token.txt",true);
-		
-		BufferedWriter bw = new BufferedWriter(fw);
-		bw.write(DateUtils.getNow());
-		bw.newLine();
-		bw.write("access_token=" + accessToken.getAccess_token());
-		bw.newLine();
-		bw.write("expired_time=" +  DateUtils.formatDate(DateUtils.stampToDate(""+accessToken.getExpiredTime())));
-		bw.newLine();
-		bw.newLine();
-		bw.close();
-		fw.close();
-	}
+	// private void outputAccessToken(AccessToken accessToken) throws
+	// IOException {
+	// File file = new File("temp");
+	// if(!file.exists()) {
+	// file.mkdirs();
+	// }
+	// log.info("文件所在路径为:"+file.getAbsolutePath()+"\\"+DateUtils.getToday()+"
+	// access_token.txt");
+	// FileWriter fw = new FileWriter(file+"/"+DateUtils.getToday()+"
+	// access_token.txt",true);
+	//
+	// BufferedWriter bw = new BufferedWriter(fw);
+	// bw.write(DateUtils.getNow());
+	// bw.newLine();
+	// bw.write("access_token=" + accessToken.getAccess_token());
+	// bw.newLine();
+	// bw.write("expired_time=" +
+	// DateUtils.formatDate(DateUtils.stampToDate(""+accessToken.getExpiredTime())));
+	// bw.newLine();
+	// bw.newLine();
+	// bw.close();
+	// fw.close();
+	// }
 
 }

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ssyvsse.wechat.pojo.AccessToken;
+import com.ssyvsse.wechat.pojo.WXUserInfo;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
@@ -130,5 +131,14 @@ public class WXUtil {
 		}
 		return accessToken;
 	}
+	
+	/**
+	 * 获取用户基本信息
+	 */
+	public final static String get_userInfo = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
 
+	public static WXUserInfo getWXUserInfo(String access_token,String openId,String language){
+		return null;
+	}
+	
 }
