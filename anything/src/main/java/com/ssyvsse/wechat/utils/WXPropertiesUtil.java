@@ -21,7 +21,7 @@ public class WXPropertiesUtil {
 	public static String oauth_url;
 	public static String encrypt_message;
 	public static String encoding_aeskey;
-
+	
 	public static Properties prop;
 
 	static {

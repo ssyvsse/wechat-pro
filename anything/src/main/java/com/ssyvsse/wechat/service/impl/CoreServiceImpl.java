@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssyvsse.wechat.config.ApiConfigKit;
@@ -29,8 +31,12 @@ import com.ssyvsse.wechat.msg.req.event.FollowEventMsg;
 import com.ssyvsse.wechat.msg.resp.RespBaseMsg;
 import com.ssyvsse.wechat.msg.resp.RespImageMsg;
 import com.ssyvsse.wechat.msg.resp.RespTextMsg;
+import com.ssyvsse.wechat.pojo.WXUserInfo;
 import com.ssyvsse.wechat.service.CoreService;
+import com.ssyvsse.wechat.service.WXUserInfoService;
+import com.ssyvsse.wechat.thread.TokenThread;
 import com.ssyvsse.wechat.utils.MsgUtils;
+import com.ssyvsse.wechat.utils.WXUtil;
 
 /**
  * @author llb
@@ -42,6 +48,9 @@ public class CoreServiceImpl implements CoreService {
 
 	private static Logger logger = LoggerFactory.getLogger(CoreServiceImpl.class);
 
+	@Autowired
+	private WXUserInfoService wxUserInfoService;
+	
 	private ReqBaseMsg reqBaseMsg;
 
 	/**
@@ -70,6 +79,15 @@ public class CoreServiceImpl implements CoreService {
 				// 关注消息
 				FollowEventMsg followEventMsg = (FollowEventMsg) reqBaseMsg;
 				if ("subscribe".equals(followEventMsg.getEvent())) {
+					WXUserInfo wxUserInfo = WXUtil.getWXUserInfo(TokenThread.accessToken.getAccess_token(),followEventMsg.getFromUserName());
+					if(wxUserInfo==null) {
+						logger.error("获取不到");
+					}else {
+						logger.info("获取微信信息成功");
+						wxUserInfo.setCreateTime(new Date());
+						wxUserInfo.setCreateBy("wechat subscribe");
+						wxUserInfoService.saveAndFlush(wxUserInfo);
+					}
 					/* 关注 */
 					textTypeResp(followEventMsg, request, response);
 				} else if ("unsubscribe".equals(((FollowEventMsg) reqBaseMsg).getEvent())) {

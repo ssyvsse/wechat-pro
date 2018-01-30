@@ -131,14 +131,39 @@ public class WXUtil {
 		}
 		return accessToken;
 	}
-	
+
+	public final static String get_userInfo = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+
 	/**
 	 * 获取用户基本信息
 	 */
-	public final static String get_userInfo = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
-
-	public static WXUserInfo getWXUserInfo(String access_token,String openId,String language){
-		return null;
+	public static WXUserInfo getWXUserInfo(String access_token, String openId) {
+		WXUserInfo wxUserInfo = null;
+		String requestUrl = get_userInfo.replace("ACCESS_TOKEN", access_token).replace("OPENID", openId);
+		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
+		if (null != jsonObject) {
+			wxUserInfo = new WXUserInfo();
+			try {
+				wxUserInfo.setSubscribe(jsonObject.getInt("subscribe"));
+				wxUserInfo.setOpenid(jsonObject.getString("openid"));
+				wxUserInfo.setNickname(jsonObject.getString("nickname"));
+				wxUserInfo.setSex(jsonObject.getInt("sex"));
+				wxUserInfo.setLanguage(jsonObject.getString("language"));
+				wxUserInfo.setCity(jsonObject.getString("city"));
+				wxUserInfo.setProvince(jsonObject.getString("province"));
+				wxUserInfo.setCountry(jsonObject.getString("country"));
+				wxUserInfo.setHeadimgurl(jsonObject.getString("headimgurl"));
+				wxUserInfo.setSubscribe_time(jsonObject.getLong("subscribe_time"));
+				// wxUserInfo.setUnionid(jsonObject.getString("unionid"));
+				wxUserInfo.setRemark(jsonObject.getString("remark"));
+				wxUserInfo.setGroupid(jsonObject.getInt("groupid"));
+				// wxUserInfo.setTagid_list(tagid_list);
+			} catch (Exception e) {
+				log.error("获取微信用户信息失败:" + e.getMessage());
+				return null;
+			}
+		}
+		return wxUserInfo;
 	}
-	
+
 }
