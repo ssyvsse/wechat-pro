@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/css/demo.css" />
 <!--必要样式-->
 <link rel="stylesheet" type="text/css" href="/css/component.css" />
-<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+
 <style>
 .code {
 	float: left;
@@ -97,7 +97,8 @@
 		</div>
 	</div>
 	
-	<!-- /container -->
+	<!-- /container --> 
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 	<script src="/js/TweenLite.min.js"></script>
 	<script src="/js/EasePack.min.js"></script>
 	<script src="/js/rAF.js"></script>

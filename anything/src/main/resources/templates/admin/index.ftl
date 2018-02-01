@@ -88,6 +88,22 @@
 						</ul>
 					</li>
 					</@shiro.hasPermission>
+					
+					<@shiro.hasPermission name="system:yygl:index">
+					<li><a href="#"> <i class="glyphicon glyphicon-cloud"></i>
+							<span class="nav-label">运营管理</span> <span class="fa arrow"></span>
+					</a>
+						<ul class="nav nav-second-level">
+							<@shiro.hasPermission name="system:homepage_manager:index">
+							<li><a class="J_menuItem" href="${ctx!}/admin/homepage_manager/index">导航栏管理</a>
+							</li>
+							</@shiro.hasPermission>
+							
+
+							
+						</ul>
+					</li>
+					</@shiro.hasPermission>
 				</ul>
 			</div>
 		</nav>

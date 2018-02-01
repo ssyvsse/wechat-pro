@@ -1,17 +1,12 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+<meta charset="utf-8">
+<title></title>
+<meta name="keywords" content="">
+<meta name="description" content="">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>用户列表</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-
-    <link rel="shortcut icon" href="favicon.ico"> 
+</head>
     <link href="${ctx!}/assets/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="${ctx!}/assets/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 
@@ -34,9 +29,6 @@
         }
     } 
 </style>
-
-</head>
-
 <body class="gray-bg">
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
@@ -96,7 +88,7 @@
 			    //必须设置，不然request.getParameter获取不到请求参数
 			    contentType: "application/x-www-form-urlencoded",
 			    //获取数据的Servlet地址  
-			    url: "${ctx!}/admin/user/list",
+			    url: "${ctx!}/admin/homepage_manager/list",
 			    //表格显示条纹  
 			    striped: true,
 			    //启动分页  
@@ -111,15 +103,22 @@
 			    search: true,
 			    //是否启用详细信息视图
 			    detailView:true,
-			    detailFormatter:detailFormatter,
+			    detailFormatter:function(index, row) {
+					var html = [];
+					html.push('<p><b>描述:</b> ' + row.description + '</p>');
+					return html.join('');
+				},
 			    //表示服务端请求  
-			    sidePagination: "client",
+			    sidePagination: "server",
 			    //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder  
 			    //设置为limit可以获取limit, offset, search, sort, order  
 			    queryParamsType: "undefined",
 			    //json数据解析
 			    responseHandler: function(res) {
-			    	return res
+			    	return {
+			            "rows": res.content,
+			            "total": res.totalElements
+			        }; 
 			    },
 			    //数据列
 			    columns: [{
@@ -127,8 +126,8 @@
 			        field: "id",
 			        sortable: true
 			    },{
-			        title: "用户名",
-			        field: "userName"
+			        title: "名称",
+			        field: "name"
 			    },{
 			        title: "所属角色",
 			        field: "roles",
@@ -158,21 +157,12 @@
 			        title: "出生日期",
 			        field: "birthday"
 			    },{
-			        title: "电话",
-			        field: "telephone"
+			        title: "父id",
+			        field: "parentId"
 			    },{
-			        title: "邮箱",
-			        field: "email"
-			    }/* ,{
-			        title: "状态",
-			        sortable: true,
-			        field: "deleteStatus",
-                    formatter: function (value, row, index) {
-                        if (value == '0') 
-                        	return '<span class="label label-info">未删除</span>';
-                        return '<span class="label label-danger">已删除</span>';
-                    }
-			    } */,{
+			        title: "类型",
+			        field: "type"
+			    },{
 			        title: "锁定",
 			        field: "locked",
 			        formatter: function (value, row, index) {
@@ -192,80 +182,20 @@
 			        title: "操作",
 			        field: "empty",
                     formatter: function (value, row, index) {
-                    	var operateHtml = '<@shiro.hasPermission name="system:user:edit"><button style="    margin: 10px 0;width:84px;font-size: 14px;" class="btn btn-primary btn-xs" type="button" onclick="edit(\''+row.id+'\')"><i class="fa fa-edit"></i>&nbsp;修改</button> &nbsp;</@shiro.hasPermission>';
-                    
-                    	operateHtml = operateHtml + '<@shiro.hasPermission name="system:user:grant"><button  style="margin: 10px 0;width:84px;font-size: 14px;" class="btn btn-info btn-xs" type="button" onclick="grant(\''+row.id+'\')"><i class="fa fa-arrows"></i>&nbsp;关联角色</button></@shiro.hasPermission>';
+                    	var operateHtml = '';
                         return operateHtml;
                     }
 			    }]
 			});
         });
         
-        function edit(id){
-        	layer.open({
-        	      type: 2,
-        	      title: '用户修改',
-        	      shadeClose: true,
-        	      shade: 0.6,
-        	      area: ['895px', '710px'],
-        	      content: '${ctx!}/admin/user/edit/' + id,
-        	      end: function(index){
-        	    	  $('#table_list').bootstrapTable("refresh");
-       	    	  }
-        	    });
-        }
-        function add(){
-        	layer.open({
-        	      type: 2,
-        	      title: '用户添加',
-        	      shadeClose: true,
-        	      shade: 0.6,
-        	      area: ['895px', '710px'],
-        	      content: '${ctx!}/admin/user/add',
-        	      end: function(index){
-        	    	  $('#table_list').bootstrapTable("refresh");
-       	    	  }
-        	    });
-        }
-        function grant(id){
-        	layer.open({
-        	      type: 2,
-        	      title: '关联角色',
-        	      shadeClose: true,
-        	      shade: false,
-        	      area: ['893px', '600px'],
-        	      content: '${ctx!}/admin/user/grant/'  + id,
-        	      end: function(index){
-        	    	  $('#table_list').bootstrapTable("refresh");
-       	    	  }
-        	    });
-        }
-        function del(id){
-        	layer.confirm('确定删除吗?', {icon: 3, title:'提示'}, function(index){
-        		$.ajax({
-    	    		   type: "POST",
-    	    		   dataType: "json",
-    	    		   url: "${ctx!}/admin/user/delete/" + id,
-    	    		   success: function(msg){
-	 	   	    			layer.msg(msg.message, {time: 2000},function(){
-	 	   	    				$('#table_list').bootstrapTable("refresh");
-	 	   	    				layer.close(index);
-	 	   					});
-    	    		   }
-    	    	});
-       		});
-        }
         
-        function detailFormatter(index, row) {
-	        var html = [];
-	        html.push('<p><b>描述:</b> ' + row.description + '</p>');
-	        return html.join('');
-	    }
+        
+        
     </script>
 
     
     
 
 </body>
-
 </html>

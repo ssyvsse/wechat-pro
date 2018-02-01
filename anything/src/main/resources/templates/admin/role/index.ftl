@@ -29,7 +29,7 @@
     }
     @media screen and (max-width: 1630px) { 
     body #table_list tbody tr td:last-child button{
-        display: block;
+        display: inline;
         margin: 0 auto !important;
     }
 
